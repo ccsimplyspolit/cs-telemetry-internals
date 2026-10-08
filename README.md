@@ -1,42 +1,44 @@
-# Valve Anti-Cheat (VAC) Client Telemetry & Memory Verification Internals
+# Valve Anti-Cheat (VAC) Client Telemetry, Subtick Protocol & VMProtect Devirtualization Research
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Type: Security Advisory / Research](https://img.shields.io/badge/Category-Defensive%20Security%20Advisory-red.svg)]()
-[![Target: Client Telemetry](https://img.shields.io/badge/Target-Source2%20%2F%20VAC-informational.svg)]()
+[![Type: Security Research / Advisories](https://img.shields.io/badge/Category-Defensive%20Security%20Research-red.svg)]()
+[![Target: Source2 %2F Windows x64](https://img.shields.io/badge/Target-Source2%20%2F%20Windows%20x64-informational.svg)]()
 
 ## Overview
 
-This repository contains independent defensive security research, architectural analysis, and security advisories examining client-side telemetry, memory auditing mechanisms, and anti-tamper heuristics within modern client integrity systems (specifically Valve Anti-Cheat / VAC and VAC Live on the Source 2 engine).
+This repository contains in-depth defensive security research, architectural analysis, and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, and code virtualization within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
 
 All research was conducted in strictly isolated, offline development sandboxes using synthetic test harnesses to audit client-side verification boundaries.
 
 ---
 
-## Published Security Advisories & Disclosures
+## Published Security Advisories & Technical Papers
 
+### 1. Formal Security Advisories
 - **[ADV-2026-001: Client Memory Integrity Verification & Telemetry Collection Routines](advisories/ADV-2026-001_memory_scanning_telemetry.md)**  
   *Technical breakdown of virtual memory state polling (`NtQueryVirtualMemory`), unbacked executable page detection, thread stack backtracing, and report serialization.*
+
+### 2. Comprehensive Architectural Whitepapers
+- **[VMProtect 3.6–3.10.5 Devirtualization Atlas & Handler Dispatch Analysis](docs/vmp_devirtualization_atlas.md)**  
+  *In-depth reconstruction of VM execution models, mapping virtual registers (`VIP`, `VSP`, `ROLLING_KEY`), Mixed Boolean-Arithmetic (MBA) dispatcher sequences, A/B/A CRC-integrity routing tables (1,535 verified triples), and anti-debugging probes (`int 2Dh`, direct syscalls, `rdtsc`).*
+- **[Subtick Input Validation & Protobuf Telemetry in Source 2](docs/subtick_protobuf_telemetry.md)**  
+  *Detailed specification of `CBaseUserCmdPB.input_history` serialization, fractional tick timing (`when \in [0.0, 1.0]`), monotonic ordering rules, and server-side reconciliation.*
+- **[Windows PE Injection Vectors & Endpoint Detection Telemetry](docs/pe_injection_vectors_telemetry.md)**  
+  *Comparative analysis of 11 distinct binary injection techniques (LoadLibrary, LdrLoadDll, ManualMap, ThreadHijack, APC, Kernel, EarlyBird, Section, Atom, Process Doppelgänging, Module Overwrite) and their kernel-mode observability (`ObRegisterCallbacks`, `PsSetCreateThreadNotifyRoutine`, VAD traversal).*
+- **[Client Telemetry Protocol & Memory Traversal Specification](docs/telemetry_protocol_analysis.md)**  
+  *Granular binary layout of diagnostic telemetry frames (`TelemetryRecordHeader`, `MemoryAnomalyPayload`) and decompiler pseudocode.*
+
+---
+
+## Tooling & Static Analysis Automation
+
+- **`tools/vac_module_analyzer.py`**: Automated IDAPython script for locating native memory inspection primitives and annotating disassembly call sites with defensive audit bookmarks.
 
 ---
 
 ## Research Scope & Ethics
 
 All experiments were performed on locally hosted dummy modules and offline test binaries without connecting to live Valve matchmaking or production game servers. The primary goal of this research is educational: documenting client integrity models, helping endpoint defenders understand memory telemetry, and improving detection engineering for modern operating systems.
-
----
-
-## Repository Structure
-
-```
-├── advisories/
-│   └── ADV-2026-001_memory_scanning_telemetry.md  # Formal security research advisory
-├── docs/
-│   └── telemetry_protocol_analysis.md             # Breakdown of packet structures & report fields
-├── tools/
-│   └── vac_module_analyzer.py                     # Static analysis tool for scanning inspection primitives
-├── LICENSE                                        # MIT License
-└── SECURITY.md                                    # Responsible disclosure guidelines
-```
 
 ---
 
