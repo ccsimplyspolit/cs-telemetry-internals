@@ -11,43 +11,59 @@
 
 ## Executive Summary
 
-Client-side anti-cheat subsystems operating in user-mode on Windows rely on periodic memory space traversal to establish an integrity baseline. This advisory documents the reverse-engineered execution model of client telemetry modules, focusing on how memory pages are validated, how anomalies (such as code trampolines or unbacked allocations) are identified, and how diagnostic telemetry packages are formatted for backend consumption.
+Client-side integrity validation systems operating in user-mode on Windows rely on periodic memory space traversal to establish an integrity baseline. This advisory documents the reverse-engineered execution model of client telemetry modules, focusing on:
+1. Native API primitives and memory traversal heuristics (`NtQueryVirtualMemory`).
+2. Detection criteria for unbacked executable code and inline detour trampolines.
+3. Diagnostic telemetry payload structures and cryptographic transmission encapsulation.
 
 ---
 
-## Technical Details
+## Deep Technical Architecture
 
-### 1. Memory Traversal via Native Primitives
-The client scanner issues recurring calls to `NtQueryVirtualMemory` specifying `MemoryBasicInformation`. The traversal loop evaluates the contiguous Virtual Address Space (VAS):
+### 1. Incremental Memory Traversal Loop
+Rather than scanning entire process address spaces synchronously, modern integrity modules execute bucketed scans (4MB–16MB chunks per tick) using `NtQueryVirtualMemory`:
 
-1. **State Assessment:** Evaluates committed memory regions (`MEM_COMMIT`).
-2. **Page Type Discrimination:**
-   - Pages flagged as `MEM_IMAGE` are cross-referenced with the Loaded Module List (`InLoadOrderModuleList` within PEB).
-   - Pages flagged as `MEM_PRIVATE` or `MEM_MAPPED` possessing executable permissions (`PAGE_EXECUTE`, `PAGE_EXECUTE_READ`, `PAGE_EXECUTE_READWRITE`) trigger secondary inspection passes.
-3. **PE Section Boundary Verification:**
-   - For modules marked as `MEM_IMAGE`, the scanner checks whether the page resides within declared `.text` section virtual offsets.
-   - Discrepancies between physical file headers on disk and mapped memory representations are flagged as inline hooks.
+```cpp
+// Normalized Traversal Heuristic
+void ProcessChunkTraversal(uintptr_t base_addr, size_t chunk_size) {
+    MEMORY_BASIC_INFORMATION mbi;
+    uintptr_t current = base_addr;
+    
+    while (current < base_addr + chunk_size) {
+        if (NtQueryVirtualMemory(GetCurrentProcess(), (PVOID)current, 
+                                 MemoryBasicInformation, &mbi, sizeof(mbi), nullptr) >= 0) {
+            
+            // Check for unbacked executable memory
+            if ((mbi.Type == MEM_PRIVATE || mbi.Type == MEM_MAPPED) &&
+                (mbi.Protect & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE))) {
+                ReportAnomaly(EVENT_UNBACKED_EXECUTABLE_MEMORY, current, mbi.Protect);
+            }
+            current = (uintptr_t)mbi.BaseAddress + mbi.RegionSize;
+        } else {
+            current += 0x1000;
+        }
+    }
+}
+```
 
-### 2. Anomaly Fingerprinting & Telemetry Generation
-When an anomaly is encountered:
-- An inspection packet is constructed in a dedicated scratch buffer.
-- The packet contains:
-  - Base Virtual Address and Relative Virtual Address (RVA) of the anomaly.
-  - Page protection flags (`AllocationProtect` and `Protect`).
-  - First 64 bytes of machine instructions (disassembly context).
-  - Target thread's instruction pointer (`RIP`) and call stack backtrace.
-- The buffer is signed, encrypted using a session key, and enqueued into the game client's outbound network packet queue.
+### 2. Relative Virtual Address (RVA) Trampoline Detection
+Inline hooks (such as 5-byte JMP `0xE9` or 14-byte `FF 25 00000000 [QWORD]` indirect jumps) placed on exported functions or game loop callbacks are detected via:
+- Comparing mapped memory pages against a cached copy of original executable code mapped from disk.
+- Applying relocation masks using the PE base relocation table (`IMAGE_DIRECTORY_ENTRY_BASERELOC`) to exclude ASLR address fixups.
+- Flagging byte deviations outside of relocation descriptors as unauthorized code modifications.
+
+### 3. Diagnostic Report Serialization
+Detailed structural layout of the telemetry frame:
+- **Magic Identifier:** `0x4D454C54` ('TLEM')
+- **Header:** Monotonic sequence counter, timestamp epoch, protocol version.
+- **Payload:** Event ID, target RVA, 64-byte instruction disassembly context, thread register snapshot (`RIP`, `RSP`, `RBP`), and 8-level call stack backtrace.
+
+*(Full protocol binary specification is documented in [docs/telemetry_protocol_analysis.md](../docs/telemetry_protocol_analysis.md)).*
 
 ---
 
-## Defensive Recommendations & Best Practices
+## Defensive Engineering Best Practices
 
-1. **Minimizing False Positives:** Endpoint integrity software must account for legitimate JIT compilation engines (e.g., embedded Chromium/V8 instances or audio DSP engines) that legitimately allocate `PAGE_EXECUTE_READWRITE` buffers.
-2. **Deterministic Integrity Baselines:** Maintain cryptographic hashes of disk-backed modules and verify export tables dynamically rather than relying solely on user-mode hook detection heuristics.
-3. **Encrypted Channel Segregation:** Telemetry packets should utilize out-of-band TLS connections rather than piggybacking directly on standard UDP game frame transport to avoid traffic tampering.
-
----
-
-## Research Environment & Reproduction
-- Environment: Isolated Windows 11 Enterprise (x64) sandbox with hypervisor debugging enabled.
-- Instrumentation: IDA Pro static analysis, customized test harness injecting synthetic test DLLs.
+1. **Hardware-Enforced Memory Boundaries:** Modern applications should adopt Windows Virtualization-Based Security (VBS) and Hypervisor-Protected Code Integrity (HVCI) rather than relying solely on user-mode memory scanning.
+2. **False-Positive Mitigation:** Embedded runtimes (V8, WebAssembly, LuaJIT) generate dynamic executable memory pages; integrity scanners must integrate with engine allocator hooks to maintain strict allowlists.
+3. **Out-of-Band Telemetry Channels:** Avoid multiplexing telemetry packets over untrusted peer-to-peer or UDP simulation streams; transmit telemetry over authenticated TLS sessions with mutual certificate pinning.
