@@ -1,4 +1,4 @@
-# Valve Anti-Cheat (VAC) Client Telemetry, Subtick Protocol, VMProtect Devirtualization & API Security Audits
+# Valve Anti-Cheat (VAC) Client Telemetry, Subtick Protocol, VMProtect Devirtualization & Vulnerability Disclosures
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Type: Security Research / Advisories](https://img.shields.io/badge/Category-Defensive%20Security%20Research-red.svg)]()
@@ -6,19 +6,27 @@
 
 ## Overview
 
-This repository contains in-depth defensive security research, architectural analysis, and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, kernel drivers, code virtualization, and backend API verification within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
+This repository contains in-depth defensive security research, architectural analysis, vulnerability disclosure reports (coordinated via HackerOne / Valve), and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, kernel drivers, code virtualization, and backend API verification within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
 
-All research was conducted in strictly isolated, offline development sandboxes using synthetic test harnesses to audit client-side verification boundaries.
+All research was conducted in strictly isolated, offline development sandboxes using synthetic test harnesses to audit client-side and server-side verification boundaries.
 
 ---
 
-## Published Security Advisories & Technical Papers
+## Published Security Advisories & Coordinated Disclosures
 
-### 1. Client-Side & Memory Integrity Advisories
+### 1. Coordinated Vulnerability Disclosures (HackerOne / Valve Research)
+- **[HackerOne Report: Server-Side Subtick Input Validation Failure & Remote DoS](advisories/valve_server_disclosures/H1_Report_Subtick_Input_Validation.md)**  
+  *Detailed disclosure report documenting missing validation on incoming `CBaseUserCmdPB` / `CSubtickMoveStep` packets in `server.dll` (patch 14171), reproduction steps on local `srcds`, and server-side mitigation.*
+- **[HackerOne Report: Subtick Fire-Rate Timing Bypass](advisories/valve_server_disclosures/H1_Report_Firerate_Bypass.md)**  
+  *Analysis of fractional delta-time (`dt=0`) calculation flaws leading to unconstrained tick command execution.*
+- **[HackerOne Report: Unvalidated View Angle Spoofing & Animation Graph Crash](advisories/valve_server_disclosures/H1_Report_Viewangle_Spoof_Crash.md)**  
+  *Disassembly analysis of unconstrained angle writes at `m_angEyeAngles` (offset `0x1340`) triggering downstream AnimGraph parsing exceptions.*
+
+### 2. Client-Side & Memory Integrity Advisories
 - **[ADV-2026-001: Client Memory Integrity Verification & Telemetry Collection Routines](advisories/ADV-2026-001_memory_scanning_telemetry.md)**  
   *Technical breakdown of virtual memory state polling (`NtQueryVirtualMemory`), unbacked executable page detection, thread stack backtracing, and report serialization.*
 
-### 2. API & Infrastructure Security Advisories
+### 3. API & Infrastructure Security Advisories
 - **[ADV-2026-003: Server-Side Request Forgery (SSRF) Audit in Case URL Dispatch](advisories/api_security_audits/ADV-2026-003_ssrf_case_url_audit.md)**  
   *Audit of backend demo-fetching endpoints, parser confusion vulnerabilities, OAST out-of-band verification, and mitigation allowlisting.*
 - **[ADV-2026-004: Key-Value Parser Injection & State Poisoning Audit](advisories/api_security_audits/ADV-2026-004_key_value_injection_audit.md)**  
@@ -26,7 +34,12 @@ All research was conducted in strictly isolated, offline development sandboxes u
 - **[ADV-2026-005: OpenID Authentication Replay & Session Validation Audit](advisories/api_security_audits/ADV-2026-005_openid_replay_mitigation.md)**  
   *Inspection of federated identity handshake tokens, replay attack surfaces, and cryptographic nonce enforcement.*
 
-### 3. Comprehensive Architectural Whitepapers
+---
+
+## Comprehensive Architectural Whitepapers
+
+- **[Static Hex-Rays Audit of Server Input Processing (`server.dll`)](docs/server_dll_input_audit.md)**  
+  *Detailed decompilation walk of `server.dll` (v14171), examining `AddSubtickMove` (`0xC72C10`), `CreateMove` (`0xC97750`), and missing angle clamp instructions.*
 - **[VMProtect Protection Mechanics Full Dissection (55KB)](docs/vmp_protection_mechanics_full.md)**  
   *Master analysis of VM context structures (0x138 bytes), universal VMExit tail (`0x18023d25e`), 6 routing tables with 1,535 A/B/A CRC-integrity triples, direct-syscall dispatchers, and deobfuscation roadmaps.*
 - **[VMProtect 3.6–3.10.5 Devirtualization Atlas](docs/vmp_devirtualization_atlas.md)**  
@@ -38,7 +51,7 @@ All research was conducted in strictly isolated, offline development sandboxes u
 - **[Subtick Input Validation & Protobuf Telemetry in Source 2](docs/subtick_protobuf_telemetry.md)**  
   *Detailed specification of `CBaseUserCmdPB.input_history` serialization, fractional tick timing (`when \in [0.0, 1.0]`), monotonic ordering rules, and server-side reconciliation.*
 - **[Windows PE Injection Vectors & Endpoint Detection Telemetry](docs/pe_injection_vectors_telemetry.md)**  
-  *Comparative analysis of 11 distinct binary injection techniques (LoadLibrary, LdrLoadDll, ManualMap, ThreadHijack, APC, Kernel, EarlyBird, Section, Atom, Process Doppelgänging, Module Overwrite) and their kernel-mode observability (`ObRegisterCallbacks`, `PsSetCreateThreadNotifyRoutine`, VAD traversal).*
+  *Comparative analysis of 11 distinct binary injection techniques and their kernel-mode observability (`ObRegisterCallbacks`, `PsSetCreateThreadNotifyRoutine`, VAD traversal).*
 - **[Client Telemetry Protocol & Memory Traversal Specification](docs/telemetry_protocol_analysis.md)**  
   *Granular binary layout of diagnostic telemetry frames (`TelemetryRecordHeader`, `MemoryAnomalyPayload`) and decompiler pseudocode.*
 
@@ -52,14 +65,9 @@ All research was conducted in strictly isolated, offline development sandboxes u
 
 ---
 
-## Research Scope & Ethics
-
-All experiments were performed on locally hosted dummy modules and offline test binaries without connecting to live Valve matchmaking or production game servers. The primary goal of this research is educational: documenting client integrity models, helping endpoint defenders understand memory telemetry, and improving detection engineering for modern operating systems.
-
----
-
 ## Author & Verification
 
 - **Lead Researcher:** Sergey Shunko
+- **Contact:** `cc.simply.spolit@gmail.com`
 - **Role:** Independent Binary Security Researcher
 - **Scope:** Client-side endpoint telemetry, Windows x64 memory analysis, reverse engineering.
