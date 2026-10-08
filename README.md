@@ -38,6 +38,8 @@ All research was conducted in strictly isolated, offline development sandboxes u
 
 ## Comprehensive Architectural Whitepapers
 
+- **[False-Positive Mitigation in Subtick Telemetry: Differentiating Jitter, 8000Hz Mice & Exploitation](docs/vac_subtick_false_positive_mitigation.md)**  
+  *In-depth architectural analysis of how VAC Live avoids false bans when processing high-density command streams from 1000Hz–8000Hz gaming mice, network buffer bloat, and UDP packet bursts via temporal monotonicity verification, biomechanical velocity curves, and multi-round EMA scoring.*
 - **[Static Hex-Rays Audit of Server Input Processing (`server.dll`)](docs/server_dll_input_audit.md)**  
   *Detailed decompilation walk of `server.dll` (v14171), examining `AddSubtickMove` (`0xC72C10`), `CreateMove` (`0xC97750`), and missing angle clamp instructions.*
 - **[VMProtect Protection Mechanics Full Dissection (55KB)](docs/vmp_protection_mechanics_full.md)**  
@@ -54,6 +56,12 @@ All research was conducted in strictly isolated, offline development sandboxes u
   *Comparative analysis of 11 distinct binary injection techniques and their kernel-mode observability (`ObRegisterCallbacks`, `PsSetCreateThreadNotifyRoutine`, VAD traversal).*
 - **[Client Telemetry Protocol & Memory Traversal Specification](docs/telemetry_protocol_analysis.md)**  
   *Granular binary layout of diagnostic telemetry frames (`TelemetryRecordHeader`, `MemoryAnomalyPayload`) and decompiler pseudocode.*
+
+---
+
+## Documentation Wiki
+
+Complete 11-chapter engineering wiki available in [`wiki/`](wiki/README.md), documenting project architecture, subtick hooking methodology, runtime memory verification pipelines, and depot adaptation workflows.
 
 ---
 
