@@ -1,4 +1,4 @@
-# Valve Anti-Cheat (VAC) Client Telemetry, Subtick Protocol & VMProtect Devirtualization Research
+# Valve Anti-Cheat (VAC) Client Telemetry, Subtick Protocol, VMProtect Devirtualization & API Security Audits
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Type: Security Research / Advisories](https://img.shields.io/badge/Category-Defensive%20Security%20Research-red.svg)]()
@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository contains in-depth defensive security research, architectural analysis, and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, kernel drivers, and code virtualization within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
+This repository contains in-depth defensive security research, architectural analysis, and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, kernel drivers, code virtualization, and backend API verification within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
 
 All research was conducted in strictly isolated, offline development sandboxes using synthetic test harnesses to audit client-side verification boundaries.
 
@@ -14,11 +14,19 @@ All research was conducted in strictly isolated, offline development sandboxes u
 
 ## Published Security Advisories & Technical Papers
 
-### 1. Formal Security Advisories
+### 1. Client-Side & Memory Integrity Advisories
 - **[ADV-2026-001: Client Memory Integrity Verification & Telemetry Collection Routines](advisories/ADV-2026-001_memory_scanning_telemetry.md)**  
   *Technical breakdown of virtual memory state polling (`NtQueryVirtualMemory`), unbacked executable page detection, thread stack backtracing, and report serialization.*
 
-### 2. Comprehensive Architectural Whitepapers
+### 2. API & Infrastructure Security Advisories
+- **[ADV-2026-003: Server-Side Request Forgery (SSRF) Audit in Case URL Dispatch](advisories/api_security_audits/ADV-2026-003_ssrf_case_url_audit.md)**  
+  *Audit of backend demo-fetching endpoints, parser confusion vulnerabilities, OAST out-of-band verification, and mitigation allowlisting.*
+- **[ADV-2026-004: Key-Value Parser Injection & State Poisoning Audit](advisories/api_security_audits/ADV-2026-004_key_value_injection_audit.md)**  
+  *Analysis of serialized key-value protocols, escaping boundary failures, and payload validation.*
+- **[ADV-2026-005: OpenID Authentication Replay & Session Validation Audit](advisories/api_security_audits/ADV-2026-005_openid_replay_mitigation.md)**  
+  *Inspection of federated identity handshake tokens, replay attack surfaces, and cryptographic nonce enforcement.*
+
+### 3. Comprehensive Architectural Whitepapers
 - **[VMProtect Protection Mechanics Full Dissection (55KB)](docs/vmp_protection_mechanics_full.md)**  
   *Master analysis of VM context structures (0x138 bytes), universal VMExit tail (`0x18023d25e`), 6 routing tables with 1,535 A/B/A CRC-integrity triples, direct-syscall dispatchers, and deobfuscation roadmaps.*
 - **[VMProtect 3.6–3.10.5 Devirtualization Atlas](docs/vmp_devirtualization_atlas.md)**  
