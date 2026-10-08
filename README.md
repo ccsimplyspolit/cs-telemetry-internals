@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository contains in-depth defensive security research, architectural analysis, and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, and code virtualization within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
+This repository contains in-depth defensive security research, architectural analysis, and technical advisories examining client-side endpoint telemetry, anti-tamper heuristics, kernel drivers, and code virtualization within modern gaming engines (specifically Valve Anti-Cheat / VAC Live on Source 2 and Windows x64 binaries).
 
 All research was conducted in strictly isolated, offline development sandboxes using synthetic test harnesses to audit client-side verification boundaries.
 
@@ -19,8 +19,14 @@ All research was conducted in strictly isolated, offline development sandboxes u
   *Technical breakdown of virtual memory state polling (`NtQueryVirtualMemory`), unbacked executable page detection, thread stack backtracing, and report serialization.*
 
 ### 2. Comprehensive Architectural Whitepapers
-- **[VMProtect 3.6–3.10.5 Devirtualization Atlas & Handler Dispatch Analysis](docs/vmp_devirtualization_atlas.md)**  
-  *In-depth reconstruction of VM execution models, mapping virtual registers (`VIP`, `VSP`, `ROLLING_KEY`), Mixed Boolean-Arithmetic (MBA) dispatcher sequences, A/B/A CRC-integrity routing tables (1,535 verified triples), and anti-debugging probes (`int 2Dh`, direct syscalls, `rdtsc`).*
+- **[VMProtect Protection Mechanics Full Dissection (55KB)](docs/vmp_protection_mechanics_full.md)**  
+  *Master analysis of VM context structures (0x138 bytes), universal VMExit tail (`0x18023d25e`), 6 routing tables with 1,535 A/B/A CRC-integrity triples, direct-syscall dispatchers, and deobfuscation roadmaps.*
+- **[VMProtect 3.6–3.10.5 Devirtualization Atlas](docs/vmp_devirtualization_atlas.md)**  
+  *In-depth reconstruction of VM execution models, mapping virtual registers (`VIP`, `VSP`, `ROLLING_KEY`), Mixed Boolean-Arithmetic (MBA) dispatcher sequences, and anti-debugging probes (`int 2Dh`, direct syscalls, `rdtsc`).*
+- **[Vulnerable Kernel Drivers Analysis (BYOVD)](docs/vulnerable_kernel_drivers.md)**  
+  *Comprehensive review of vulnerable signed drivers exploited in user-to-kernel boundary attacks, kernel callback abuse, and mitigation strategies.*
+- **[Kernel Driver Hardening & Defense-in-Depth](docs/kernel_driver_hardening.md)**  
+  *WDM driver hardening guidelines, IOCTL permission sanitization, and Windows Hypervisor Code Integrity (HVCI) compliance.*
 - **[Subtick Input Validation & Protobuf Telemetry in Source 2](docs/subtick_protobuf_telemetry.md)**  
   *Detailed specification of `CBaseUserCmdPB.input_history` serialization, fractional tick timing (`when \in [0.0, 1.0]`), monotonic ordering rules, and server-side reconciliation.*
 - **[Windows PE Injection Vectors & Endpoint Detection Telemetry](docs/pe_injection_vectors_telemetry.md)**  
@@ -32,6 +38,8 @@ All research was conducted in strictly isolated, offline development sandboxes u
 
 ## Tooling & Static Analysis Automation
 
+- **`tools/vmp_atlas/build_atlas.py`**: Automated VMProtect handler merger combining 16 symbolic execution tool outputs into machine-readable `atlas.json` and `hook_manifest.json` (PE-sieve dump of 108 hooks).
+- **`tools/kbdclass_analyzer/analyze_kbdclass.cpp`**: C++ static and dynamic analysis utility for locating `kbdclass!KeyboardClassServiceCallback` in Windows kernel memory.
 - **`tools/vac_module_analyzer.py`**: Automated IDAPython script for locating native memory inspection primitives and annotating disassembly call sites with defensive audit bookmarks.
 
 ---
