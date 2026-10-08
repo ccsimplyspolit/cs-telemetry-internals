@@ -1,0 +1,80 @@
+{
+  "ok_seDebug": true,
+  "pid": 53000,
+  "hooks": [
+    {
+      "name": "H1 CreateMove",
+      "module": "client.dll",
+      "module_base": "0x7ff8dc8c0000",
+      "module_size": "0x27b3000",
+      "sig_hex": "48 8B C4 44 88 40 18 89 50 10 48 89 48 08 55 53",
+      "sig_len": 16,
+      "wildcards": 0,
+      "hits": 1,
+      "hit_rvas": [
+        "0xb09528"
+      ],
+      "first_hit_bytes": "48 8B C4 44 88 40 18 89 50 10 48 89 48 08 55 53 56 41 54 48 8D A8 18 FF FF FF 48 81 EC C8 01 00"
+    },
+    {
+      "name": "H2 LevelInit",
+      "module": "client.dll",
+      "module_base": "0x7ff8dc8c0000",
+      "module_size": "0x27b3000",
+      "sig_hex": "48 89 74 24 10 57 48 83 EC 30 48 8B 0D ? ? ? ? 48 8B FA",
+      "sig_len": 20,
+      "wildcards": 4,
+      "hits": 1,
+      "hit_rvas": [
+        "0xb3a600"
+      ],
+      "first_hit_bytes": "48 89 74 24 10 57 48 83 EC 30 48 8B 0D 7F 1F 85 01 48 8B FA 45 33 C9 48 8D 15 5A E8 E4 00 45 33"
+    },
+    {
+      "name": "H3 SerializePartialToArray",
+      "module": "client.dll",
+      "module_base": "0x7ff8dc8c0000",
+      "module_size": "0x27b3000",
+      "sig_hex": "48 89 5C 24 18 55 56 57 48 81 EC 90 00 00 00 48 8B 05 ? ? ? ? 48 33 C4",
+      "sig_len": 25,
+      "wildcards": 4,
+      "hits": 1,
+      "hit_rvas": [
+        "0x11ad520"
+      ],
+      "first_hit_bytes": "48 89 5C 24 18 55 56 57 48 81 EC 90 00 00 00 48 8B 05 CA 6A F6 00 48 33 C4 48 89 84 24 80 00 00"
+    },
+    {
+      "name": "H4 ShouldUpdateSequences",
+      "module": "animationsystem.dll",
+      "module_base": "0x7ff906070000",
+      "module_size": "0xbd9000",
+      "sig_hex": "48 89 5C 24 08 48 89 74 24 18 57 48 83 EC 20 49 8B 40 48",
+      "sig_len": 19,
+      "wildcards": 0,
+      "hits": 1,
+      "hit_rvas": [
+        "0x14f950"
+      ],
+      "expected_rva": "0x14f950",
+      "expected_match": true,
+      "first_hit_bytes": "48 89 5C 24 08 48 89 74 24 18 57 48 83 EC 20 49 8B 40 48 49 8B D8 48 8B FA 48 8B F1 48 85 C0 0F"
+    }
+  ],
+  "err": null,
+  "seDebug_msg": "AdjustTokenPrivileges ok=1 err=0",
+  "modules_found": {
+    "engine2.dll": {
+      "base": "0x7ff93e0d0000",
+      "size": "0x962000"
+    },
+    "animationsystem.dll": {
+      "base": "0x7ff906070000",
+      "size": "0xbd9000"
+    },
+    "client.dll": {
+      "base": "0x7ff8dc8c0000",
+      "size": "0x27b3000"
+    }
+  }
+}

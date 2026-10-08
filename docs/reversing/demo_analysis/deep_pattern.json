@@ -1,0 +1,570 @@
+{
+  "fires": [
+    1729,
+    4619,
+    4623,
+    6282,
+    13054,
+    19509,
+    19546,
+    19572,
+    20034,
+    21487,
+    21489,
+    22398,
+    22406,
+    23307,
+    23309,
+    25180,
+    25181,
+    27620,
+    27977,
+    28147
+  ],
+  "props_with_variation": [
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iCashEarned",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iDamage",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iDeaths",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iEquipmentValue",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iHeadShotKills",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iKillReward",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iKills",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iLiveTime",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iMoneySaved",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_flTotalRoundDamageDealt",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iCashEarned",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iDamage",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iDeaths",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iEquipmentValue",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iHeadShotKills",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iKillReward",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iKills",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iLiveTime",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iNumRoundKills",
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iNumRoundKillsHeadshots",
+    "CCSPlayerController.CCSPlayerController_InGameMoneyServices.m_iAccount",
+    "CCSPlayerController.CCSPlayerController_InGameMoneyServices.m_iCashSpentThisRound",
+    "CCSPlayerController.CCSPlayerController_InGameMoneyServices.m_iStartAccount",
+    "CCSPlayerController.CCSPlayerController_InGameMoneyServices.m_iTotalCashSpent",
+    "CCSPlayerController.m_bPawnHasHelmet",
+    "CCSPlayerController.m_eMvpReason",
+    "CCSPlayerController.m_iMVPs",
+    "CCSPlayerController.m_iMusicKitID",
+    "CCSPlayerController.m_iPawnArmor",
+    "CCSPlayerController.m_iPawnHealth",
+    "CCSPlayerController.m_iPawnLifetimeStart",
+    "CCSPlayerController.m_iPendingTeamNum",
+    "CCSPlayerController.m_iScore",
+    "CCSPlayerController.m_iTeamNum",
+    "CCSPlayerController.m_nKillCount",
+    "CCSPlayerController.m_nPawnCharacterDefIndex",
+    "CCSPlayerController.m_nTickBase",
+    "CCSPlayerController.m_recentKillQueue",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.AnimGraph2SerializedPoseRecipeSlot_t.m_topology",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_MeshGroupMask",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_SerializePoseRecipeAG2Dynamic",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_angRotation",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_cellX",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_cellY",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_flRootBoneOffset_z",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_hModel",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_nSerializePoseRecipeAG2ActiveSlot",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_nServerSerializationContextIteration",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecSecondarySkeletons",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecX",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecY",
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecZ",
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseAngle",
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseAngleVel",
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseTick",
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseTickInterpAmount",
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_unpredictableBaseAngle",
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_unpredictableBaseTick",
+    "CCSPlayerPawn.CCSPlayer_BulletServices.m_totalHitsOnServer",
+    "CCSPlayerPawn.CCSPlayer_BuyServices.SellbackPurchaseEntry_t.m_nPrevArmor",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_PostProcessingVolumes",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_flCsViewPunchAngleTickRatio",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_flFOVRate",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_flFOVTime",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_hZoomOwner",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_iFOV",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_iFOVStart",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_nCsViewPunchAngleTick",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_vecCsViewPunchAngle",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.soundEventHash",
+    "CCSPlayerPawn.CCSPlayer_CameraServices.soundscapeEntityListIndex",
+    "CCSPlayerPawn.CCSPlayer_ItemServices.m_bHasHelmet",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_bDesiresDuck",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_bDucked",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_bDucking",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_bJumpApexPending",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_bUseFrictionStashedSpeed",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_bUsingGroundTopologyOffset",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_fStashGrenadeParameterWhen",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckAmount",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckRootOffset",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckSpeed",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckViewOffset",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flFallVelocity",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flFrictionStashedSpeed",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastActualJumpPressFrac",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastDuckTime",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastJumpFrac",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastJumpVelocityZ",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastLandedFrac",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastLandedVelocityX",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastLandedVelocityY",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastLandedVelocityZ",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flLastUsableJumpPressFrac",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flStamina",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flUsingGroundTopologyOffsetTransitionSmoothing",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_nGameCodeHasMovedPlayerAfterCommand",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_nLastActualJumpPressTick",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_nLastJumpTick",
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_nLastLandedTick",
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_bBlockInspectUntilNextGraphUpdate",
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_flNextAttack",
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_hActiveWeapon",
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_hLastWeapon",
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_networkAnimTiming",
+    "CCSPlayerPawn.ViewAngleServerChange_t.nIndex",
+    "CCSPlayerPawn.ViewAngleServerChange_t.nType",
+    "CCSPlayerPawn.ViewAngleServerChange_t.qAngle",
+    "CCSPlayerPawn.m_ArmorValue",
+    "CCSPlayerPawn.m_angEyeAngles",
+    "CCSPlayerPawn.m_bIsScoped",
+    "CCSPlayerPawn.m_bRagdollDamageHeadshot",
+    "CCSPlayerPawn.m_bResumeZoom",
+    "CCSPlayerPawn.m_fFlags",
+    "CCSPlayerPawn.m_flDeathTime",
+    "CCSPlayerPawn.m_flEmitSoundTime",
+    "CCSPlayerPawn.m_flFlinchStack",
+    "CCSPlayerPawn.m_flTimeOfLastInjury",
+    "CCSPlayerPawn.m_flVelocityModifier",
+    "CCSPlayerPawn.m_hGroundEntity",
+    "CCSPlayerPawn.m_iHealth",
+    "CCSPlayerPawn.m_iShotsFired",
+    "CCSPlayerPawn.m_iTeamNum",
+    "CCSPlayerPawn.m_nForceBone",
+    "CCSPlayerPawn.m_nGroundBodyIndex",
+    "CCSPlayerPawn.m_nLastKillerIndex",
+    "CCSPlayerPawn.m_nRagdollDamageBone",
+    "CCSPlayerPawn.m_nWhichBombZone",
+    "CCSPlayerPawn.m_qDeathEyeAngles",
+    "CCSPlayerPawn.m_szLastPlaceName",
+    "CCSPlayerPawn.m_szRagdollDamageWeaponName",
+    "CCSPlayerPawn.m_ubInterpolationFrame",
+    "CCSPlayerPawn.m_unCurrentEquipmentValue",
+    "CCSPlayerPawn.m_unFreezetimeEndEquipmentValue",
+    "CCSPlayerPawn.m_unRoundStartEquipmentValue",
+    "CCSPlayerPawn.m_vRagdollDamageForce",
+    "CCSPlayerPawn.m_vecForce",
+    "CCSPlayerPawn.m_vecMaxs",
+    "CCSPlayerPawn.m_vecX",
+    "CCSPlayerPawn.m_vecY",
+    "CCSPlayerPawn.m_vecZ"
+  ],
+  "fire_touch_stats": {
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iCashEarned": {
+      "total": 9,
+      "offsets": {
+        "0": 9,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iDamage": {
+      "total": 14,
+      "offsets": {
+        "0": 14,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iHeadShotKills": {
+      "total": 4,
+      "offsets": {
+        "0": 4
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iKillReward": {
+      "total": 8,
+      "offsets": {
+        "0": 8,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.CSPerRoundStats_t.m_iKills": {
+      "total": 7,
+      "offsets": {
+        "0": 7,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_flTotalRoundDamageDealt": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iCashEarned": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iHeadShotKills": {
+      "total": 8,
+      "offsets": {
+        "0": 8
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iKillReward": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iKills": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iNumRoundKills": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_ActionTrackingServices.m_iNumRoundKillsHeadshots": {
+      "total": 8,
+      "offsets": {
+        "0": 8
+      }
+    },
+    "CCSPlayerController.CCSPlayerController_InGameMoneyServices.m_iAccount": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.m_iScore": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.m_nKillCount": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerController.m_nTickBase": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerController.m_recentKillQueue": {
+      "total": 4,
+      "offsets": {
+        "0": 4
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.AnimGraph2SerializedPoseRecipeSlot_t.m_topology": {
+      "total": 10,
+      "offsets": {
+        "0": 10,
+        "1": 4
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_SerializePoseRecipeAG2Dynamic": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_angRotation": {
+      "total": 8,
+      "offsets": {
+        "1": 15,
+        "0": 8
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_nSerializePoseRecipeAG2ActiveSlot": {
+      "total": 14,
+      "offsets": {
+        "0": 14,
+        "1": 4
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecX": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecY": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_vecZ": {
+      "total": 18,
+      "offsets": {
+        "0": 18,
+        "1": 17
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseAngle": {
+      "total": 12,
+      "offsets": {
+        "0": 12,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseAngleVel": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseTick": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_AimPunchServices.m_predictableBaseTickInterpAmount": {
+      "total": 14,
+      "offsets": {
+        "0": 14
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_BulletServices.m_totalHitsOnServer": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_flCsViewPunchAngleTickRatio": {
+      "total": 12,
+      "offsets": {
+        "0": 12
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_nCsViewPunchAngleTick": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_vecCsViewPunchAngle": {
+      "total": 19,
+      "offsets": {
+        "0": 19,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flFallVelocity": {
+      "total": 10,
+      "offsets": {
+        "0": 10,
+        "1": 10
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_bBlockInspectUntilNextGraphUpdate": {
+      "total": 13,
+      "offsets": {
+        "0": 13
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_WeaponServices.m_networkAnimTiming": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 15
+      }
+    },
+    "CCSPlayerPawn.m_angEyeAngles": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerPawn.m_iShotsFired": {
+      "total": 19,
+      "offsets": {
+        "0": 19,
+        "1": 19
+      }
+    },
+    "CCSPlayerPawn.m_vecX": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerPawn.m_vecY": {
+      "total": 20,
+      "offsets": {
+        "0": 20,
+        "1": 20
+      }
+    },
+    "CCSPlayerPawn.m_vecZ": {
+      "total": 17,
+      "offsets": {
+        "0": 17,
+        "1": 19
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckSpeed": {
+      "total": 10,
+      "offsets": {
+        "0": 10,
+        "1": 10
+      }
+    },
+    "CCSPlayerController.m_eMvpReason": {
+      "total": 1,
+      "offsets": {
+        "0": 1
+      }
+    },
+    "CCSPlayerController.m_iMVPs": {
+      "total": 4,
+      "offsets": {
+        "0": 4
+      }
+    },
+    "CCSPlayerController.m_iMusicKitID": {
+      "total": 1,
+      "offsets": {
+        "0": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_flFOVRate": {
+      "total": 5,
+      "offsets": {
+        "1": 4,
+        "0": 5
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_flFOVTime": {
+      "total": 9,
+      "offsets": {
+        "0": 9,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_iFOV": {
+      "total": 8,
+      "offsets": {
+        "0": 8,
+        "1": 4
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_CameraServices.m_iFOVStart": {
+      "total": 5,
+      "offsets": {
+        "0": 5
+      }
+    },
+    "CCSPlayerPawn.m_bIsScoped": {
+      "total": 8,
+      "offsets": {
+        "0": 8,
+        "1": 4
+      }
+    },
+    "CCSPlayerPawn.m_bResumeZoom": {
+      "total": 8,
+      "offsets": {
+        "0": 8,
+        "1": 4
+      }
+    },
+    "CCSPlayerPawn.m_flFlinchStack": {
+      "total": 2,
+      "offsets": {
+        "0": 2,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CBodyComponentBaseAnimGraph.m_flRootBoneOffset_z": {
+      "total": 7,
+      "offsets": {
+        "0": 7,
+        "1": 7
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckRootOffset": {
+      "total": 1,
+      "offsets": {
+        "0": 1,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckViewOffset": {
+      "total": 4,
+      "offsets": {
+        "0": 4,
+        "1": 4
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flDuckAmount": {
+      "total": 3,
+      "offsets": {
+        "0": 3,
+        "1": 3
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flFrictionStashedSpeed": {
+      "total": 10,
+      "offsets": {
+        "0": 10,
+        "1": 10
+      }
+    },
+    "CCSPlayerPawn.m_flEmitSoundTime": {
+      "total": 1,
+      "offsets": {
+        "0": 1
+      }
+    },
+    "CCSPlayerPawn.CCSPlayer_MovementServices.m_flStamina": {
+      "total": 1,
+      "offsets": {
+        "0": 1,
+        "1": 1
+      }
+    },
+    "CCSPlayerPawn.m_flVelocityModifier": {
+      "total": 1,
+      "offsets": {
+        "0": 1,
+        "1": 1
+      }
+    }
+  }
+}

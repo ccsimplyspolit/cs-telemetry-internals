@@ -1,0 +1,772 @@
+{
+  "source": "PE-sieve v0.4.1.1 dump of cs2.exe PID 6072",
+  "main_image": "cs2.exe",
+  "fuckvac_original_path": "C:\\Users\\Administrator\\Documents\\CS2\\DT\\FuckVacAgain.dll",
+  "fuckvac_base": "0x7ffb8d170000",
+  "client_dll_base": "0x7ffb8eb00000",
+  "total_hooks": 108,
+  "trampoline_pools": {
+    "0x7ffb8d160000": 3,
+    "0x7ffc188b0000": 41,
+    "0x7ffc1b740000": 61,
+    "0x7ffc1cbf0000": 3
+  },
+  "per_module": {
+    "client.dll": {
+      "base_va": 140718407417856,
+      "hook_count": 3,
+      "hooks": [
+        {
+          "rva": 11333520,
+          "symbol": "hook_0",
+          "target_va": 140718380552160,
+          "size": 5
+        },
+        {
+          "rva": 11526064,
+          "symbol": "hook_1",
+          "target_va": 140718380552083,
+          "size": 5
+        },
+        {
+          "rva": 18389296,
+          "symbol": "hook_2",
+          "target_va": 140718380552019,
+          "size": 5
+        }
+      ]
+    },
+    "d3d9.dll": {
+      "base_va": 140719498395648,
+      "hook_count": 2,
+      "hooks": [
+        {
+          "rva": 220256,
+          "symbol": "Direct3DCreate9",
+          "target_va": 140720720249935,
+          "size": 5
+        },
+        {
+          "rva": 220304,
+          "symbol": "Direct3DCreate9Ex",
+          "target_va": 140720720249998,
+          "size": 5
+        }
+      ]
+    },
+    "AudioSes.dll": {
+      "base_va": 140720263856128,
+      "hook_count": 10,
+      "hooks": [
+        {
+          "rva": 76800,
+          "symbol": "hook_0",
+          "target_va": 140720720250826,
+          "size": 5
+        },
+        {
+          "rva": 77808,
+          "symbol": "hook_1",
+          "target_va": 140720720251020,
+          "size": 5
+        },
+        {
+          "rva": 86560,
+          "symbol": "hook_2",
+          "target_va": 140720720250890,
+          "size": 5
+        },
+        {
+          "rva": 131056,
+          "symbol": "hook_3",
+          "target_va": 140720720251274,
+          "size": 5
+        },
+        {
+          "rva": 131744,
+          "symbol": "hook_4",
+          "target_va": 140720720251338,
+          "size": 5
+        },
+        {
+          "rva": 133792,
+          "symbol": "hook_5",
+          "target_va": 140720720251082,
+          "size": 5
+        },
+        {
+          "rva": 140496,
+          "symbol": "hook_6",
+          "target_va": 140720720250954,
+          "size": 5
+        },
+        {
+          "rva": 144528,
+          "symbol": "hook_7",
+          "target_va": 140720720251146,
+          "size": 5
+        },
+        {
+          "rva": 184736,
+          "symbol": "hook_8",
+          "target_va": 140720720251406,
+          "size": 5
+        },
+        {
+          "rva": 327408,
+          "symbol": "hook_9",
+          "target_va": 140720720251212,
+          "size": 5
+        }
+      ]
+    },
+    "winmm.dll": {
+      "base_va": 140720630595584,
+      "hook_count": 4,
+      "hooks": [
+        {
+          "rva": 24416,
+          "symbol": "joyGetDevCapsA",
+          "target_va": 140720769076426,
+          "size": 5
+        },
+        {
+          "rva": 25120,
+          "symbol": "joyGetDevCapsW",
+          "target_va": 140720769076492,
+          "size": 5
+        },
+        {
+          "rva": 25392,
+          "symbol": "joyGetNumDevs",
+          "target_va": 140720769076362,
+          "size": 5
+        },
+        {
+          "rva": 25504,
+          "symbol": "joyGetPosEx",
+          "target_va": 140720769076554,
+          "size": 5
+        }
+      ]
+    },
+    "MMDevAPI.dll": {
+      "base_va": 140720633282560,
+      "hook_count": 4,
+      "hooks": [
+        {
+          "rva": 46928,
+          "symbol": "hook_0",
+          "target_va": 140720720250570,
+          "size": 5
+        },
+        {
+          "rva": 93760,
+          "symbol": "hook_1",
+          "target_va": 140720720250698,
+          "size": 5
+        },
+        {
+          "rva": 103472,
+          "symbol": "hook_2",
+          "target_va": 140720720250636,
+          "size": 5
+        },
+        {
+          "rva": 330128,
+          "symbol": "hook_3",
+          "target_va": 140720720250762,
+          "size": 5
+        }
+      ]
+    },
+    "d3d11.dll": {
+      "base_va": 140720669720576,
+      "hook_count": 1,
+      "hooks": [
+        {
+          "rva": 529152,
+          "symbol": "hook_0",
+          "target_va": 140720720250510,
+          "size": 5
+        }
+      ]
+    },
+    "apphelp.dll": {
+      "base_va": 140720700653568,
+      "hook_count": 1,
+      "hooks": [
+        {
+          "rva": 239248,
+          "symbol": "hook_0",
+          "target_va": 140720769076304,
+          "size": 5
+        }
+      ]
+    },
+    "hid.dll": {
+      "base_va": 140720720314368,
+      "hook_count": 11,
+      "hooks": [
+        {
+          "rva": 4112,
+          "symbol": "HidP_MaxDataListLength",
+          "target_va": 140720720249230,
+          "size": 5
+        },
+        {
+          "rva": 4256,
+          "symbol": "HidP_GetValueCaps",
+          "target_va": 140720720249164,
+          "size": 5
+        },
+        {
+          "rva": 4976,
+          "symbol": "HidP_GetButtonCaps",
+          "target_va": 140720720249100,
+          "size": 5
+        },
+        {
+          "rva": 5616,
+          "symbol": "HidP_GetCaps",
+          "target_va": 140720720249035,
+          "size": 5
+        },
+        {
+          "rva": 6032,
+          "symbol": "HidD_GetAttributes",
+          "target_va": 140720769077195,
+          "size": 5
+        },
+        {
+          "rva": 6176,
+          "symbol": "HidD_GetPreparsedData",
+          "target_va": 140720720248842,
+          "size": 5
+        },
+        {
+          "rva": 7312,
+          "symbol": "HidD_FreePreparsedData",
+          "target_va": 140720720248909,
+          "size": 5
+        },
+        {
+          "rva": 7408,
+          "symbol": "HidP_GetUsages",
+          "target_va": 140720720249354,
+          "size": 5
+        },
+        {
+          "rva": 7984,
+          "symbol": "HidP_GetUsageValue",
+          "target_va": 140720720249421,
+          "size": 5
+        },
+        {
+          "rva": 14656,
+          "symbol": "HidD_GetProductString",
+          "target_va": 140720720248974,
+          "size": 5
+        },
+        {
+          "rva": 15440,
+          "symbol": "HidP_GetData",
+          "target_va": 140720720249290,
+          "size": 5
+        }
+      ]
+    },
+    "dxgi.dll": {
+      "base_va": 140720720576512,
+      "hook_count": 14,
+      "hooks": [
+        {
+          "rva": 5632,
+          "symbol": "hook_0",
+          "target_va": 140720720250378,
+          "size": 5
+        },
+        {
+          "rva": 6336,
+          "symbol": "hook_1",
+          "target_va": 140720720250122,
+          "size": 5
+        },
+        {
+          "rva": 13056,
+          "symbol": "hook_2",
+          "target_va": 140720720250061,
+          "size": 5
+        },
+        {
+          "rva": 122656,
+          "symbol": "CreateDXGIFactory",
+          "target_va": 140720720249482,
+          "size": 5
+        },
+        {
+          "rva": 122816,
+          "symbol": "CreateDXGIFactory2",
+          "target_va": 140720720249610,
+          "size": 5
+        },
+        {
+          "rva": 123072,
+          "symbol": "CreateDXGIFactory1",
+          "target_va": 140720720249546,
+          "size": 5
+        },
+        {
+          "rva": 139056,
+          "symbol": "hook_6",
+          "target_va": 140720720250186,
+          "size": 5
+        },
+        {
+          "rva": 141328,
+          "symbol": "hook_7",
+          "target_va": 140720720250251,
+          "size": 5
+        },
+        {
+          "rva": 394208,
+          "symbol": "hook_8",
+          "target_va": 140720720249674,
+          "size": 5
+        },
+        {
+          "rva": 395616,
+          "symbol": "hook_9",
+          "target_va": 140720720249866,
+          "size": 5
+        },
+        {
+          "rva": 396016,
+          "symbol": "hook_10",
+          "target_va": 140720720249802,
+          "size": 5
+        },
+        {
+          "rva": 396480,
+          "symbol": "hook_11",
+          "target_va": 140720720249738,
+          "size": 5
+        },
+        {
+          "rva": 436880,
+          "symbol": "hook_12",
+          "target_va": 140720720250314,
+          "size": 5
+        },
+        {
+          "rva": 442576,
+          "symbol": "hook_13",
+          "target_va": 140720720250443,
+          "size": 5
+        }
+      ]
+    },
+    "KERNELBASE.dll": {
+      "base_va": 140720750198784,
+      "hook_count": 4,
+      "hooks": [
+        {
+          "rva": 144064,
+          "symbol": "FreeLibrary",
+          "target_va": 140720769073546,
+          "size": 5
+        },
+        {
+          "rva": 158400,
+          "symbol": "LoadLibraryExA",
+          "target_va": 140720769073482,
+          "size": 5
+        },
+        {
+          "rva": 186896,
+          "symbol": "LoadLibraryExW",
+          "target_va": 140720790765642,
+          "size": 5
+        },
+        {
+          "rva": 497088,
+          "symbol": "ResumeThread",
+          "target_va": 140720769073614,
+          "size": 5
+        }
+      ]
+    },
+    "imm32.dll": {
+      "base_va": 140720757014528,
+      "hook_count": 1,
+      "hooks": [
+        {
+          "rva": 38816,
+          "symbol": "ImmAssociateContext",
+          "target_va": 140720769076236,
+          "size": 5
+        }
+      ]
+    },
+    "user32.dll": {
+      "base_va": 140720757932032,
+      "hook_count": 30,
+      "hooks": [
+        {
+          "rva": 38528,
+          "symbol": "PeekMessageA",
+          "target_va": 140720769075146,
+          "size": 5
+        },
+        {
+          "rva": 41296,
+          "symbol": "PeekMessageW",
+          "target_va": 140720790765706,
+          "size": 5
+        },
+        {
+          "rva": 57824,
+          "symbol": "DispatchMessageW",
+          "target_va": 140720769074956,
+          "size": 5
+        },
+        {
+          "rva": 124160,
+          "symbol": "GetKeyState",
+          "target_va": 140720769074763,
+          "size": 5
+        },
+        {
+          "rva": 139520,
+          "symbol": "GetMessageW",
+          "target_va": 140720769075083,
+          "size": 5
+        },
+        {
+          "rva": 148672,
+          "symbol": "GetAsyncKeyState",
+          "target_va": 140720769074698,
+          "size": 5
+        },
+        {
+          "rva": 164976,
+          "symbol": "GetCursorPos",
+          "target_va": 140720769074250,
+          "size": 5
+        },
+        {
+          "rva": 167888,
+          "symbol": "GetMessageA",
+          "target_va": 140720769075018,
+          "size": 5
+        },
+        {
+          "rva": 179104,
+          "symbol": "SetCursor",
+          "target_va": 140720769074380,
+          "size": 5
+        },
+        {
+          "rva": 180304,
+          "symbol": "DispatchMessageA",
+          "target_va": 140720769074890,
+          "size": 5
+        },
+        {
+          "rva": 181648,
+          "symbol": "RegisterDeviceNotificationA",
+          "target_va": 140720769075472,
+          "size": 5
+        },
+        {
+          "rva": 182800,
+          "symbol": "UnregisterDeviceNotification",
+          "target_va": 140720769075531,
+          "size": 5
+        },
+        {
+          "rva": 184400,
+          "symbol": "ReleaseCapture",
+          "target_va": 140720769074634,
+          "size": 5
+        },
+        {
+          "rva": 208704,
+          "symbol": "GetRawInputDeviceInfoW",
+          "target_va": 140720769075724,
+          "size": 5
+        },
+        {
+          "rva": 214896,
+          "symbol": "ClipCursor",
+          "target_va": 140720769075275,
+          "size": 5
+        },
+        {
+          "rva": 215776,
+          "symbol": "FlashWindowEx",
+          "target_va": 140720769076107,
+          "size": 5
+        },
+        {
+          "rva": 215920,
+          "symbol": "GetClipCursor",
+          "target_va": 140720769075339,
+          "size": 5
+        },
+        {
+          "rva": 215984,
+          "symbol": "GetCursor",
+          "target_va": 140720769074443,
+          "size": 5
+        },
+        {
+          "rva": 216000,
+          "symbol": "GetCursorInfo",
+          "target_va": 140720769074507,
+          "size": 5
+        },
+        {
+          "rva": 216288,
+          "symbol": "GetKeyboardState",
+          "target_va": 140720769074827,
+          "size": 5
+        },
+        {
+          "rva": 216688,
+          "symbol": "GetRawInputData",
+          "target_va": 140720769075915,
+          "size": 5
+        },
+        {
+          "rva": 216704,
+          "symbol": "GetRawInputDeviceList",
+          "target_va": 140720769075595,
+          "size": 5
+        },
+        {
+          "rva": 216736,
+          "symbol": "GetRegisteredRawInputDevices",
+          "target_va": 140720769075851,
+          "size": 5
+        },
+        {
+          "rva": 218480,
+          "symbol": "RegisterRawInputDevices",
+          "target_va": 140720769075787,
+          "size": 5
+        },
+        {
+          "rva": 218848,
+          "symbol": "SetCapture",
+          "target_va": 140720769074571,
+          "size": 5
+        },
+        {
+          "rva": 218976,
+          "symbol": "SetCursorPos",
+          "target_va": 140720769074187,
+          "size": 5
+        },
+        {
+          "rva": 219680,
+          "symbol": "ShowCursor",
+          "target_va": 140720769074315,
+          "size": 5
+        },
+        {
+          "rva": 441984,
+          "symbol": "GetRawInputBuffer",
+          "target_va": 140720769075986,
+          "size": 5
+        },
+        {
+          "rva": 562384,
+          "symbol": "FlashWindow",
+          "target_va": 140720769076043,
+          "size": 5
+        },
+        {
+          "rva": 576352,
+          "symbol": "GetRawInputDeviceInfoA",
+          "target_va": 140720769075660,
+          "size": 5
+        }
+      ]
+    },
+    "shell32.dll": {
+      "base_va": 140720760553472,
+      "hook_count": 2,
+      "hooks": [
+        {
+          "rva": 475248,
+          "symbol": "ShellExecuteExW",
+          "target_va": 140720769076746,
+          "size": 5
+        },
+        {
+          "rva": 2112464,
+          "symbol": "ShellExecuteEx",
+          "target_va": 140720769076682,
+          "size": 5
+        }
+      ]
+    },
+    "kernel32.dll": {
+      "base_va": 140720769466368,
+      "hook_count": 11,
+      "hooks": [
+        {
+          "rva": 100416,
+          "symbol": "VirtualAlloc",
+          "target_va": 140720769073164,
+          "size": 5
+        },
+        {
+          "rva": 110848,
+          "symbol": "LoadLibraryExW",
+          "target_va": 140720769073676,
+          "size": 5
+        },
+        {
+          "rva": 114608,
+          "symbol": "VirtualProtect",
+          "target_va": 140720769073228,
+          "size": 5
+        },
+        {
+          "rva": 117408,
+          "symbol": "CreateProcessA",
+          "target_va": 140720769074124,
+          "size": 5
+        },
+        {
+          "rva": 117520,
+          "symbol": "FreeLibrary",
+          "target_va": 140720769073996,
+          "size": 5
+        },
+        {
+          "rva": 118432,
+          "symbol": "CreateProcessW",
+          "target_va": 140720769074060,
+          "size": 5
+        },
+        {
+          "rva": 130816,
+          "symbol": "LoadLibraryExA",
+          "target_va": 140720769073740,
+          "size": 5
+        },
+        {
+          "rva": 131616,
+          "symbol": "LoadLibraryW",
+          "target_va": 140720769073804,
+          "size": 5
+        },
+        {
+          "rva": 133168,
+          "symbol": "LoadLibraryA",
+          "target_va": 140720769073868,
+          "size": 5
+        },
+        {
+          "rva": 254256,
+          "symbol": "VirtualAllocEx",
+          "target_va": 140720769073292,
+          "size": 5
+        },
+        {
+          "rva": 254320,
+          "symbol": "VirtualProtectEx",
+          "target_va": 140720769073356,
+          "size": 5
+        }
+      ]
+    },
+    "setupapi.dll": {
+      "base_va": 140720770318336,
+      "hook_count": 6,
+      "hooks": [
+        {
+          "rva": 7792,
+          "symbol": "SetupDiGetClassDevsA",
+          "target_va": 140720769076810,
+          "size": 5
+        },
+        {
+          "rva": 11520,
+          "symbol": "SetupDiGetClassDevsW",
+          "target_va": 140720769076876,
+          "size": 5
+        },
+        {
+          "rva": 13040,
+          "symbol": "SetupDiEnumDeviceInterfaces",
+          "target_va": 140720769076938,
+          "size": 5
+        },
+        {
+          "rva": 14496,
+          "symbol": "SetupDiEnumDeviceInfo",
+          "target_va": 140720769077003,
+          "size": 5
+        },
+        {
+          "rva": 104032,
+          "symbol": "SetupDiEnumDriverInfoW",
+          "target_va": 140720769077132,
+          "size": 5
+        },
+        {
+          "rva": 272912,
+          "symbol": "SetupDiEnumDriverInfoA",
+          "target_va": 140720769077066,
+          "size": 5
+        }
+      ]
+    },
+    "combase.dll": {
+      "base_va": 140720776740864,
+      "hook_count": 1,
+      "hooks": [
+        {
+          "rva": 271840,
+          "symbol": "RoGetActivationFactory",
+          "target_va": 140720769076619,
+          "size": 5
+        }
+      ]
+    },
+    "gdi32.dll": {
+      "base_va": 140720780279808,
+      "hook_count": 1,
+      "hooks": [
+        {
+          "rva": 32896,
+          "symbol": "SetDeviceGammaRamp",
+          "target_va": 140720769076171,
+          "size": 5
+        }
+      ]
+    },
+    "ntdll.dll": {
+      "base_va": 140720788668416,
+      "hook_count": 2,
+      "hooks": [
+        {
+          "rva": 92688,
+          "symbol": "LdrLoadDll",
+          "target_va": 140720769073930,
+          "size": 5
+        },
+        {
+          "rva": 646128,
+          "symbol": "NtOpenFile",
+          "target_va": 140720790765581,
+          "size": 5
+        }
+      ]
+    }
+  }
+}

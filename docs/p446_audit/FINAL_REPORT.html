@@ -1,0 +1,1437 @@
+<title>Project446 · Pre-release Security Audit</title>
+<style>
+:root {
+  --bg: #f5f2ec;
+  --bg-panel: #efeae1;
+  --bg-inset: #e8e2d6;
+  --fg: #1a1d22;
+  --fg-muted: #5c636b;
+  --fg-faint: #8a8f95;
+  --border: #dcd7cd;
+  --border-strong: #c9c3b6;
+  --p0: #b8332e;
+  --p0-tint: #f5dcda;
+  --p1: #a56d10;
+  --p1-tint: #f5e6c8;
+  --p2: #3e6474;
+  --p2-tint: #d8e3e8;
+  --info: #556680;
+  --code-bg: #ede8dd;
+  --code-fg: #1a1d22;
+  --link: #7a361f;
+  --accent-hair: #1a1d22;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1013;
+    --bg-panel: #14181c;
+    --bg-inset: #191d22;
+    --fg: #e6e8ec;
+    --fg-muted: #a0a6ae;
+    --fg-faint: #6a7078;
+    --border: #22272e;
+    --border-strong: #2d333b;
+    --p0: #e8574f;
+    --p0-tint: #2a181a;
+    --p1: #d59a3e;
+    --p1-tint: #2a2418;
+    --p2: #7a9db0;
+    --p2-tint: #1a2328;
+    --info: #8497b0;
+    --code-bg: #0a0d10;
+    --code-fg: #d8dbe0;
+    --link: #e89f7a;
+    --accent-hair: #e6e8ec;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f5f2ec;
+  --bg-panel: #efeae1;
+  --bg-inset: #e8e2d6;
+  --fg: #1a1d22;
+  --fg-muted: #5c636b;
+  --fg-faint: #8a8f95;
+  --border: #dcd7cd;
+  --border-strong: #c9c3b6;
+  --p0: #b8332e;
+  --p0-tint: #f5dcda;
+  --p1: #a56d10;
+  --p1-tint: #f5e6c8;
+  --p2: #3e6474;
+  --p2-tint: #d8e3e8;
+  --info: #556680;
+  --code-bg: #ede8dd;
+  --code-fg: #1a1d22;
+  --link: #7a361f;
+  --accent-hair: #1a1d22;
+}
+:root[data-theme="dark"] {
+  --bg: #0d1013;
+  --bg-panel: #14181c;
+  --bg-inset: #191d22;
+  --fg: #e6e8ec;
+  --fg-muted: #a0a6ae;
+  --fg-faint: #6a7078;
+  --border: #22272e;
+  --border-strong: #2d333b;
+  --p0: #e8574f;
+  --p0-tint: #2a181a;
+  --p1: #d59a3e;
+  --p1-tint: #2a2418;
+  --p2: #7a9db0;
+  --p2-tint: #1a2328;
+  --info: #8497b0;
+  --code-bg: #0a0d10;
+  --code-fg: #d8dbe0;
+  --link: #e89f7a;
+  --accent-hair: #e6e8ec;
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--fg); }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+}
+
+.mono, code, pre, .id, .kbd {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-feature-settings: "zero" 1, "ss01" 1;
+}
+
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+/* ---------- Header ---------- */
+.masthead {
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--accent-hair);
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-faint);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.eyebrow span::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--p0);
+  margin-right: 8px;
+  transform: translateY(-1px);
+  border-radius: 1px;
+}
+.eyebrow span + span::before { background: var(--p1); }
+.eyebrow span + span + span::before { background: var(--p2); }
+.eyebrow span + span + span + span::before { background: var(--fg-faint); }
+
+h1.title {
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 640;
+  margin: 0 0 20px;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: var(--fg-muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.meta {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+.meta > div {
+  padding: 16px 20px 16px 0;
+  border-right: 1px solid var(--border);
+}
+.meta > div:last-child { border-right: 0; padding-right: 0; }
+.meta dt {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--fg-faint);
+  margin: 0 0 6px;
+}
+.meta dd {
+  font-size: 14px;
+  color: var(--fg);
+  margin: 0;
+  font-weight: 500;
+}
+.meta dd .mono { font-size: 12.5px; }
+
+@media (max-width: 720px) {
+  .wrap { padding: 32px 20px 64px; }
+  h1.title { font-size: 32px; }
+  .meta { grid-template-columns: 1fr 1fr; }
+  .meta > div:nth-child(2) { border-right: 0; }
+  .meta > div:nth-child(1), .meta > div:nth-child(2) { border-bottom: 1px solid var(--border); }
+}
+
+/* ---------- Nav (sticky) ---------- */
+.tocbar {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  padding: 12px 0;
+  margin: 0 0 32px;
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+}
+.tocbar a {
+  color: var(--fg-muted);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: background 120ms, color 120ms;
+}
+.tocbar a:hover {
+  background: var(--bg-inset);
+  color: var(--fg);
+}
+.tocbar a:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 1px;
+}
+.tocbar .divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.tocbar .themetoggle {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+.tocbar .themetoggle:hover { color: var(--fg); border-color: var(--border-strong); }
+
+/* ---------- Executive summary ---------- */
+.exec {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.stat {
+  padding: 20px 18px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  position: relative;
+  overflow: hidden;
+}
+.stat::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--sev, var(--fg-faint));
+}
+.stat[data-sev="p0"] { --sev: var(--p0); }
+.stat[data-sev="p1"] { --sev: var(--p1); }
+.stat[data-sev="p2"] { --sev: var(--p2); }
+.stat[data-sev="hyp"] { --sev: var(--fg-faint); }
+
+.stat .n {
+  font-size: 42px;
+  font-weight: 620;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--sev, var(--fg));
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 4px;
+}
+.stat .l {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--fg-muted);
+  margin: 0 0 6px;
+}
+.stat .d {
+  font-size: 12.5px;
+  color: var(--fg-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 720px) {
+  .exec { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Section ---------- */
+section { margin-top: 44px; scroll-margin-top: 80px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-head h2 {
+  font-size: 22px;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.section-head .count {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  color: var(--fg-faint);
+  letter-spacing: 0.04em;
+}
+.section-head .sev-mark {
+  width: 10px;
+  height: 10px;
+  background: var(--sev);
+  transform: translateY(-2px);
+}
+
+section.p0 { --sev: var(--p0); }
+section.p1 { --sev: var(--p1); }
+section.p2 { --sev: var(--p2); }
+
+/* ---------- Finding ---------- */
+.finding {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--sev, var(--fg-faint));
+  margin-bottom: 14px;
+  padding: 20px 22px;
+  position: relative;
+}
+.finding-head {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.finding .fid {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sev);
+  background: var(--sev-tint);
+  padding: 2px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+}
+.p0-finding { --sev: var(--p0); --sev-tint: var(--p0-tint); }
+.p1-finding { --sev: var(--p1); --sev-tint: var(--p1-tint); }
+.p2-finding { --sev: var(--p2); --sev-tint: var(--p2-tint); }
+
+.finding h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.35;
+  flex: 1;
+  min-width: 300px;
+}
+.finding .tag {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-faint);
+  padding: 2px 7px;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+}
+.finding .tag.new { color: var(--sev); border-color: var(--sev); }
+
+.finding p, .finding ul, .finding ol { margin: 8px 0; color: var(--fg-muted); }
+.finding p:last-child, .finding ul:last-child { margin-bottom: 0; }
+.finding strong { color: var(--fg); font-weight: 600; }
+.finding a { color: var(--link); text-underline-offset: 2px; }
+
+.finding .row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--border);
+}
+.finding .row:first-of-type { border-top: 0; padding-top: 0; }
+.finding .row .rl {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+  padding-top: 2px;
+}
+.finding .row .rv { color: var(--fg-muted); font-size: 14px; }
+
+pre, .code {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--code-fg);
+  margin: 8px 0;
+  white-space: pre;
+}
+pre.wrap-line { white-space: pre-wrap; word-break: break-word; }
+code {
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 0.88em;
+  color: var(--code-fg);
+  border: 1px solid var(--border);
+}
+.finding p code, .finding li code { font-size: 12.5px; }
+
+/* ---------- Hypothesis matrix ---------- */
+.hyp-matrix {
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.hyp-matrix table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.hyp-matrix th, .hyp-matrix td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.hyp-matrix th {
+  background: var(--bg-inset);
+  font-weight: 600;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+}
+.hyp-matrix tr:last-child td { border-bottom: 0; }
+.hyp-matrix .hid {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: var(--info);
+  font-weight: 600;
+  font-size: 12.5px;
+}
+.hyp-matrix td { color: var(--fg-muted); }
+.hyp-matrix td strong { color: var(--fg); }
+.hyp-matrix .status {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid var(--border-strong);
+  color: var(--fg-faint);
+  display: inline-block;
+  white-space: nowrap;
+}
+.hyp-matrix .status.partial { color: var(--p1); border-color: var(--p1); }
+.hyp-matrix .status.confirmed { color: var(--p0); border-color: var(--p0); }
+
+/* ---------- Callout ---------- */
+.callout {
+  background: var(--bg-inset);
+  border-left: 3px solid var(--info);
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 14px;
+  color: var(--fg-muted);
+}
+.callout strong { color: var(--fg); }
+
+/* ---------- Roadmap ---------- */
+.roadmap {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+.roadmap-col {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 18px 20px;
+}
+.roadmap-col h4 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+}
+.roadmap-col h4 .when {
+  color: var(--sev);
+  margin-right: 8px;
+}
+.roadmap-col[data-when="now"] { --sev: var(--p0); }
+.roadmap-col[data-when="week"] { --sev: var(--p1); }
+.roadmap-col[data-when="quarter"] { --sev: var(--p2); }
+
+.roadmap-col ul {
+  list-style: none;
+  padding: 12px 0 0;
+  margin: 0;
+}
+.roadmap-col li {
+  padding: 8px 0 8px 20px;
+  border-top: 1px dashed var(--border);
+  font-size: 13.5px;
+  color: var(--fg);
+  position: relative;
+}
+.roadmap-col li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--sev);
+  border-radius: 50%;
+}
+.roadmap-col li:first-child { border-top: 0; }
+.roadmap-col li .fid {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  color: var(--fg-faint);
+  margin-left: 6px;
+}
+
+@media (max-width: 720px) {
+  .roadmap { grid-template-columns: 1fr; }
+}
+
+/* ---------- Footer ---------- */
+footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--accent-hair);
+  font-size: 12.5px;
+  color: var(--fg-faint);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  letter-spacing: 0.02em;
+}
+
+/* prose helpers */
+.body-text p { color: var(--fg-muted); }
+.body-text p:first-child { margin-top: 0; }
+
+/* accessibility */
+:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Pre-release · Black-box</span>
+      <span>Owner-authorised</span>
+      <span>Cloud + on-host</span>
+      <span>Two checkpoints consolidated</span>
+    </div>
+    <h1 class="title">Project446 — pre-release security audit</h1>
+    <p class="subtitle">
+      Consolidated findings from black-box testing of <code>project446.su</code>,
+      <code>gc.project446.su</code>, the origin host <code>213.152.43.203</code>,
+      and the Windows client (<code>Project446-Setup.exe</code>, <code>csgo_gc.dll v0.7.6.8</code>).
+      Everything below is unauthenticated unless explicitly noted.
+    </p>
+
+    <dl class="meta">
+      <div>
+        <dt>Reported</dt>
+        <dd>2026-07-24</dd>
+      </div>
+      <div>
+        <dt>Findings confirmed</dt>
+        <dd><span class="mono">30</span> across P0 / P1 / P2</dd>
+      </div>
+      <div>
+        <dt>Auth material</dt>
+        <dd>None — no admin session issued</dd>
+      </div>
+      <div>
+        <dt>Scope</dt>
+        <dd>Everything the owner supplied access to</dd>
+      </div>
+    </dl>
+  </header>
+
+  <nav class="tocbar" aria-label="Sections">
+    <a href="#exec">Summary</a>
+    <span class="divider"></span>
+    <a href="#p0">P0 · Critical</a>
+    <a href="#p1">P1 · High</a>
+    <a href="#p2">P2 · Medium</a>
+    <span class="divider"></span>
+    <a href="#hyp">Hypotheses</a>
+    <a href="#patcher">Patcher</a>
+    <a href="#roadmap">Roadmap</a>
+    <button class="themetoggle" id="ttog" type="button" aria-label="Toggle theme">Theme</button>
+  </nav>
+
+  <section id="exec">
+    <div class="exec">
+      <div class="stat" data-sev="p0">
+        <p class="l">P0 · Critical</p>
+        <p class="n">11</p>
+        <p class="d">Public data leaks, cross-tenant reads, direct-origin WAF bypass, WSS MITM latch, plaintext fleet secret.</p>
+      </div>
+      <div class="stat" data-sev="p1">
+        <p class="l">P1 · High</p>
+        <p class="n">7</p>
+        <p class="d">RBAC leaks, CSP absence, HSTS downgrade, CORS wildcard, cookie prefix that fails on the bypass path.</p>
+      </div>
+      <div class="stat" data-sev="p2">
+        <p class="l">P2 · Medium</p>
+        <p class="n">8</p>
+        <p class="d">Info disclosure, SPF soft-fail, weak SteamID validation, config exposure, robots.txt, 42 KB HTML on error.</p>
+      </div>
+      <div class="stat" data-sev="hyp">
+        <p class="l">Blocked</p>
+        <p class="n">11</p>
+        <p class="d">Hypotheses that need an authenticated admin session or a staging account to convert to confirmed.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Attack chain that already works today.</strong>
+      Any attacker with a browser can  ①&nbsp;pull <code>/api/pay/recent</code>
+      for a fresh list of paying users with SteamID64 + amount, ②&nbsp;hit
+      <code>http://213.152.43.203:3000/</code> to bypass Cloudflare + DDoS-Guard + rate-limit,
+      ③&nbsp;read <code>/api/inventory/&lt;steamId&gt;</code> for any of those users
+      without auth, ④&nbsp;pull <code>/api/update/manifest</code> to fingerprint the exact client build.
+      No credentials required, no user interaction, no privileged network position.
+    </div>
+  </section>
+
+  <section id="p0" class="p0">
+    <div class="section-head">
+      <span class="sev-mark"></span>
+      <h2>P0 · Critical</h2>
+      <span class="count">11 findings · fix before launch</span>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.1</span>
+        <h3>PostgreSQL 5432 open to the internet</h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre>python -c "import socket,struct; s=socket.socket();
+s.connect(('213.152.43.203',5432));
+s.send(struct.pack('!II', 8, 80877103));
+print(s.recv(1))"          # → b'S' (SSL supported)</pre>
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Even with strong <code>pg_hba.conf</code>, this is a brute-force + CVE
+        window. Mail, app, and DB all live on one host — a single Postgres
+        misconfig is catastrophic.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        <code>listen_addresses = '127.0.0.1'</code> in <code>postgresql.conf</code>.
+        Any remote replication path must go through WireGuard/IPsec, not the public IP.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.2</span>
+        <h3>MySQL 3306 open to the internet</h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        Direct <code>mysql -h 213.152.43.203</code> banner grab from the public
+        internet. Bind is <code>0.0.0.0</code>.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        <code>bind-address = 127.0.0.1</code> in <code>my.cnf</code>, or stop the daemon
+        entirely if MySQL isn't in active use.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.3</span>
+        <h3>Next.js origin :3000 bypasses WAF, DDoS-Guard, and Cloudflare</h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre>curl -sI http://213.152.43.203:3000/api/admin/beta</pre>
+        Returns the same 401 body as going through Cloudflare — with no rate
+        limit, no JS challenge, no TLS, no DDoS filter.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Every downstream mitigation (CF rules, DDoS-Guard, HSTS enforcement,
+        rate-limit) is defeated by hitting the origin IP directly.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Firewall :3000 to accept only from the reverse-proxy egress IPs
+        (Cloudflare + DDoS-Guard IP ranges), drop everything else.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.4</span>
+        <h3>Setup.exe is not Authenticode-signed</h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <code>Get-AuthenticodeSignature Project446-Setup.exe</code> → <code>Status: NotSigned</code>.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Anyone MITM-ing the download or the user's browsing session can swap
+        the installer for a payload without triggering the usual Windows
+        signature warning. SmartScreen shows "unknown publisher", which
+        users routinely dismiss.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Buy a code-signing certificate (Sectigo, DigiCert). Sign with SHA-256 + timestamp
+        countersignature. Add an ambient publisher-key check inside the installer
+        as defense-in-depth.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.5</span>
+        <h3><code>/api/pay/recent</code> exposes donor PII without auth</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre class="wrap-line">GET /api/pay/recent → 200
+{"donations":[
+  {"name":"iliodor21","steamId64":"76561199831924243",
+   "amount":350,"method":"yoomoney",
+   "created_at":"2026-07-22T12:13:07.135Z", ...},
+  {"name":"MR [Slendy]","steamId64":"76561198161461584",
+   "amount":500, ...}
+]}</pre>
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        SteamID64 is linkable to real identity via Steam's public profile.
+        The list gives display name, avatar, exact sum, timestamp, method.
+        Anyone can build a donor-profile database from this endpoint alone.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Public endpoint should return an aggregate — <code>{ total_donors_7d, total_amount }</code> —
+        not individual rows. If a "recent supporters" strip is needed, display
+        name only, no SteamID, no amount.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.6</span>
+        <h3>Internal URL leak — payment errors redirect to <code>0.0.0.0:3000</code></h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        Every failed <code>POST /api/pay/{create,topup,donate,callback}</code>
+        returns <code>Location: https://0.0.0.0:3000/pay/failed?reason=&lt;value&gt;</code>.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Confirms P0.3 (backend binds to <code>0.0.0.0</code>, not loopback).
+        The <code>reason=</code> parameter is user-influenced and may be an open-redirect
+        primitive if downstream code reflects it into the client redirect target.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Always use a relative <code>Location</code>. Never emit <code>0.0.0.0</code> or absolute URLs.
+        Allowlist the <code>reason=</code> values instead of reflecting free text.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.7</span>
+        <h3><code>/api/inventory/&lt;steamId&gt;</code> — cross-tenant IDOR without auth</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre>curl https://project446.su/api/inventory/76561199831924243</pre>
+        Returns the target user's inventory. No cookie, no bearer, no owner check.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Scraping surface for every player's skins/items — including anything paid.
+        Route also accepts any input (<code>abcdefghij</code>, <code>{{7*7}}</code>,
+        <code>..%2Fadmin%2Fbeta</code>) and echoes it as <code>steam_id</code>,
+        which suggests input validation is missing altogether.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Regex-validate <code>steamId</code> against <code>^7656119[0-9]{10}$</code>
+        at the handler boundary. Require auth; only owner or admin with
+        <code>inventory.read.other</code> should be able to read someone else's inventory.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.8</span>
+        <h3><code>SERVER_TOKEN</code> stored plaintext, legacy shared mode still supported</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        Strings recovered from <code>csgo_gc.dll</code>:
+        <pre class="wrap-line">GC_FLEET_SERVER_ID=&lt;uuid-from-admin-api&gt;
+SERVER_TOKEN=&lt;plain-token-from-admin-api&gt;
+Legacy shared SERVER_TOKEN auth failed (no DATABASE_URL fleet mode).
+using /gc/server/{long} + shared SERVER_TOKEN
+Wrong SERVER_TOKEN, wrong GC_FLEET_SERVER_ID, ban, or nginx stripped Authorization.</pre>
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Tokens live in plaintext <code>csgo_gc.env</code> on every SRCDS host.
+        Legacy mode uses one shared token across the whole fleet — compromise
+        of any single SRCDS = full fleet compromise. The nginx-Authorization
+        note strongly implies the auth check is delegated to nginx rather
+        than being backend-enforced, which composes badly with P0.3.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Retire legacy shared mode entirely (require <code>DATABASE_URL</code>).
+        Rotate <code>SERVER_TOKEN</code> per SRCDS; hash in DB, never store raw.
+        Ship tokens through a secrets manager, not a text file. The backend
+        must enforce Authorization independently of nginx — no header, hard 401.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.9</span>
+        <h3>Build-artifact path leaks developer workspace</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <code>csgo_gc.dll</code> contains the compile-time path
+        <code>D:\!csgo\csgo_gc\build_ninja_win32\_deps\boost-src\...</code>.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Confirms the fork lineage (<code>csgo_gc</code> = mikkokko upstream),
+        gives an attacker plausible internal-path strings for phishing, and
+        exposes the build system (Ninja, Win32, boost via <code>_deps/</code>).
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Pass <code>/PDBALTPATH:%_PDB%</code> to the MSVC linker on release builds;
+        strip embedded PDB paths from the final DLL.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.10</span>
+        <h3>WSS client can silently continue without cert verification</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <code>csgo_gc.dll</code> logs:
+        <pre>[WS] WARNING: CertOpenSystemStore failed, SSL verify may fail</pre>
+        The warning is emitted <em>and connection proceeds</em>. Fail-open, not fail-closed.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        A local attacker who can plant a certificate in the user cert store
+        (which requires no elevation) can full-MITM the WSS traffic to
+        <code>gc.project446.su</code>: read GC messages, inject arbitrary
+        messages, replay item transactions, harvest session material.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Fail-closed on <code>CertOpenSystemStore</code> failure. Better:
+        pin the <code>gc.project446.su</code> TLS certificate hash inside the
+        DLL and refuse anything else. Removes user-installed CA as an attack path.
+      </div></div>
+    </div>
+
+    <div class="finding p0-finding">
+      <div class="finding-head">
+        <span class="fid">P0.11</span>
+        <h3>Update manifest is public — leaks version, hash, signature</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre class="wrap-line">GET https://gc.project446.su/api/update/manifest?platform=win32 → 200
+version=0.7.6.8
+format=gcup
+file=update.gcup
+size=31536194
+sha256=d46b75f678b10b74900142efb1142a2236466b752c568b926eee8a649026b632
+sig=a6Xib9psdBjq82Y4T2wSAkIBGUv7Oyrl0F46zGgTrobQ0vpwr7WyFhMihQOn2Si+krdjymKT+EyvZe3FTTqqDw==
+url=/api/update/download?platform=win32</pre>
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Not a direct RCE — the Ed25519 signature protects against payload swap
+        (MITM cannot forge without the private key, per the strings
+        <code>[Update] Ed25519 signature INVALID - rejecting</code>).
+        But the leak is a fingerprinting primitive: exact build hash lets an
+        attacker match reverse-engineering sessions across versions, and the
+        signature blob is offline-analysable. Combined with P0.6 (bind-URL leak)
+        this gives an attacker the whole update path map.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Require a short-TTL HMAC (signed with <code>SERVER_TOKEN</code>) on the
+        manifest fetch, so only legitimately-registered clients see update info.
+        Rate-limit the download endpoint independently of the manifest.
+      </div></div>
+    </div>
+  </section>
+
+  <section id="p1" class="p1">
+    <div class="section-head">
+      <span class="sev-mark"></span>
+      <h2>P1 · High</h2>
+      <span class="count">7 findings · fix within the release week</span>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.1</span>
+        <h3>HSTS downgrade window via Cloudflare rewrite</h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        Origin: <code>Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</code>.
+        Public path <code>project446.su</code>: rewritten by CF to <code>max-age=0</code>.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Repair the CF page rule that strips STS. Or set the same 2-year value at the CF edge.
+      </div></div>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.2</span>
+        <h3>Wildcard CORS on admin API without credentials</h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <code>Access-Control-Allow-Origin: *</code> on <code>/api/admin/*</code> OPTIONS.
+        No <code>Allow-Credentials</code>, so cookies don't leak — but the full
+        admin route inventory becomes enumerable to any web page.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Echo <code>Origin</code> back only if it's in an explicit allowlist
+        (the panel's own origin). Do not wildcard.
+      </div></div>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.3</span>
+        <h3>RBAC permission leak — 403 body exposes the entire model</h3>
+        <span class="tag new">Upgraded from H-tier</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre>{"error":"Forbidden","missingPermission":"beta.view"}</pre>
+        Format is <code>&lt;resource&gt;.&lt;action&gt;</code>, and every admin route reveals its
+        required permission when hit without it. The whole 36-permission RBAC
+        model can be enumerated with one non-admin account.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Once the permission list is known, any mass-assignment vulnerability
+        (see H8, H11) has a ready payload:
+        <code>permissions: ["admin.all","beta.write","users.delete", …]</code>.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Return generic <code>403 Forbidden</code> to clients. Log the specific
+        missing permission server-side for observability, not in the response body.
+      </div></div>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.4</span>
+        <h3>Blanket cross-origin <code>Allow-Headers: content-type</code></h3>
+      </div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Combined with the panel's <code>credentials: 'same-origin'</code>, this
+        doesn't leak the session directly, but does let any cross-origin JS
+        fire JSON POSTs and observe response codes — useful in a
+        post-XSS-on-another-subdomain chain.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Allow only what's actually used, only from the panel origin.
+      </div></div>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.5</span>
+        <h3><code>/api/seed</code> is wired to the wrong permission</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        The seed / init endpoint (verified existence: <code>OPTIONS /api/seed</code>
+        returns <code>Allow: OPTIONS POST</code>) requires <code>news.edit</code>
+        instead of a dedicated permission scope.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Any user granted the low-privilege moderator role gets implicit
+        admin-level seed capability. Depending on what seed does, that could
+        wipe or overwrite data.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        A dedicated <code>system.seed</code> permission, or — better — remove the seed
+        endpoint from prod entirely. Seed belongs to a management script, not a public HTTP handler.
+      </div></div>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.6</span>
+        <h3>CSP is Report-Only with <code>unsafe-inline</code> + <code>unsafe-eval</code></h3>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        Cloudflare emits:
+        <pre class="wrap-line">Content-Security-Policy-Report-Only:
+  script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'</pre>
+        The application itself emits nothing. Effective enforcement: none.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Any stored XSS becomes full impact — cookie theft, SPA takeover,
+        phishing, exfil via any origin the browser will contact.
+        <code>custom_name</code> and <code>display_name</code> fields (per the
+        <a href="https://github.com/mikkokko/csgo_gc/blob/master/csgo_gc/inventory.cpp">
+        upstream csgo_gc source</a>) accept arbitrary strings without
+        sanitisation; if the P446 fork behaves the same, this is a stored-XSS
+        vector waiting for the auth session to test.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Deploy an application-level CSP in Report-Only for one week, then enforcing:
+        <pre class="wrap-line">Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'nonce-XXX';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' https://avatars.steamstatic.com data:;
+  frame-ancestors 'none';
+  base-uri 'none';
+  form-action 'self';</pre>
+      </div></div>
+    </div>
+
+    <div class="finding p1-finding">
+      <div class="finding-head">
+        <span class="fid">P1.7</span>
+        <h3><code>__Secure-</code> cookie prefix fails on the :3000 bypass path</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        NextAuth issues <code>__Secure-next-auth.callback-url</code> and
+        <code>__Host-next-auth.csrf-token</code>. RFC 6265 requires TLS for
+        these prefixes. On <code>https://project446.su/*</code> they work; on
+        <code>http://213.152.43.203:3000/*</code> they don't apply.
+      </div></div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Authenticated actions can't be performed over the bypass path, but
+        every <em>public</em> endpoint can — <code>/api/pay/recent</code>,
+        <code>/api/inventory/*</code>, <code>/api/pay/status</code>,
+        <code>/api/me/prime</code>, <code>/api/auth/session</code>.
+        The whole public surface is readable without Cloudflare + without
+        rate-limit + without HSTS.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Same as P0.3 — firewall :3000. This finding restates why P0.3 is not
+        just an "in-depth" concern.
+      </div></div>
+    </div>
+  </section>
+
+  <section id="p2" class="p2">
+    <div class="section-head">
+      <span class="sev-mark"></span>
+      <h2>P2 · Medium</h2>
+      <span class="count">8 findings · fix before or shortly after launch</span>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.1</span>
+        <h3><code>X-Powered-By: Next.js</code></h3>
+      </div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Set <code>poweredByHeader: false</code> in <code>next.config.js</code>.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.2</span>
+        <h3><code>robots.txt</code> allows everything, everywhere</h3>
+      </div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Deny <code>/api/</code> and <code>/admin/</code> for all user-agents.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.3</span>
+        <h3>SPF is <code>~all</code> (soft-fail), no DKIM/DMARC</h3>
+      </div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Mail runs on the same host as the app; phishing that spoofs
+        <code>@project446.su</code> will likely pass at many recipients.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        SPF <code>-all</code>, add DKIM signing, publish DMARC with <code>p=quarantine</code>
+        then move to <code>p=reject</code>.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.4</span>
+        <h3>Frontend SteamID regex is <code>\d{15,20}</code></h3>
+      </div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Exactly 17 digits, starts with <code>7656119</code>. Enforce server-side too.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.5</span>
+        <h3><code>/api/pay/status</code> discloses provider configuration</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        <pre>GET /api/pay/status → 200
+{"enabled":false,"primeThreshold":350,
+ "methods":{"yoomoney":true,"anypay":false}}</pre>
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Keep only <code>enabled</code> as a public UI hint. Move <code>methods</code>
+        and <code>primeThreshold</code> to the authenticated donation page.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.6</span>
+        <h3>Confirmed: direct-origin :3000 mirrors every public endpoint</h3>
+        <span class="tag new">Confirmation of P0.3</span>
+      </div>
+      <div class="row"><div class="rl">Proof</div><div class="rv">
+        Every endpoint tested via <code>https://project446.su/*</code> returns
+        identical body on <code>http://213.152.43.203:3000/*</code>, with all
+        Cloudflare-provided headers absent (no CSP, no HSTS via CF, no CF-Ray).
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Same as P0.3.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.7</span>
+        <h3><code>/api/auth/callback/steam</code> returns 42 KB of HTML on error</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        Hitting the callback without OpenID params returns the entire main-page
+        HTML instead of a small error. Turns each invalid request into 42 KB
+        of egress — a small DoS-amplification primitive.
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Return <code>{ ok:false, error:"missing_openid_params" }</code> JSON on
+        invalid callback requests.
+      </div></div>
+    </div>
+
+    <div class="finding p2-finding">
+      <div class="finding-head">
+        <span class="fid">P2.8</span>
+        <h3>Payment-webhook signature validation order is untestable while disabled</h3>
+        <span class="tag new">New this checkpoint</span>
+      </div>
+      <div class="row"><div class="rl">Impact</div><div class="rv">
+        With payments off, every POST returns <code>reason=disabled</code>
+        <em>before</em> signature verification runs — so from outside there's
+        no way to confirm whether YooMoney's <code>sha1_hash</code> and
+        AnyPay's signature are actually validated. The <em>ordering</em>
+        matters: if the enabled-check sits before the signature-check, when
+        payments turn on an attacker gets a distinguishing oracle
+        (<code>invalid_signature</code> vs a full <code>success:true</code>).
+      </div></div>
+      <div class="row"><div class="rl">Fix</div><div class="rv">
+        Signature verification must be the <em>first</em> gate in the webhook
+        handler. Only after a signature clears do you consult
+        enabled / amount / duplicate. Also whitelist the YooMoney and AnyPay
+        egress IPs at the CF edge.
+      </div></div>
+    </div>
+  </section>
+
+  <section id="hyp">
+    <div class="section-head">
+      <h2>Hypotheses that need an authenticated session</h2>
+      <span class="count">11 items · owner action required</span>
+    </div>
+
+    <p class="body-text">
+      Each row is a specific implementation flaw that black-box testing can
+      neither confirm nor refute without an admin account or a copy of the
+      backend auth module. The PoC bundle in <code>docs/p446_audit/poc/</code>
+      contains the exact commands to run against each one once access exists.
+    </p>
+
+    <div class="hyp-matrix">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:60px">ID</th>
+            <th style="width:220px">Hypothesis</th>
+            <th>Impact if true</th>
+            <th style="width:110px">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hid">H1</td>
+            <td><strong>CSRF on mutating admin endpoints</strong></td>
+            <td>Cross-origin state changes via a logged-in admin's session; scope depends on cookie <code>SameSite</code>.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H2</td>
+            <td><strong>KeyValue injection via <code>custom_name</code> / inventory import</strong></td>
+            <td>Newline / quote injection into VDF export. Upstream csgo_gc doesn't sanitise <code>custom_name</code> — if the P446 fork inherited that, confirmed on first admin test.</td>
+            <td><span class="status partial">Partial</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H3</td>
+            <td><strong>SSRF via <code>case_url</code> in overwatch patrol</strong></td>
+            <td>If the server pre-fetches the demo URL, full SSRF into localhost services (5432, 3306) or file://.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H4</td>
+            <td><strong>SQL injection in integer fields (<code>medals</code>, <code>paint_kit</code>, <code>paint_seed</code>)</strong></td>
+            <td>Direct query interpolation if prepared statements aren't used. High impact given DB is on the same host.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H5</td>
+            <td><strong>Steam OpenID 2.0 verifier bypass</strong></td>
+            <td>Login redirect works (302 → <code>steamcommunity.com/openid/login?checkid_setup</code>), but signature-verify path can't be tested from outside.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H6</td>
+            <td><strong>Fleet token stored plaintext in DB</strong></td>
+            <td><em>Already partly confirmed</em> — see P0.8. Client-side proves plaintext env storage; DB storage requires owner dump to fully confirm.</td>
+            <td><span class="status confirmed">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H7</td>
+            <td><strong>OTA <code>publish</code> writes before verifying signature</strong></td>
+            <td>Race window during which clients could pull an unverified module.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H8</td>
+            <td><strong><code>is_admin</code> / <code>permissions</code> mass-assignable via profile PUT</strong></td>
+            <td>Privilege escalation. Payload is fully known thanks to P1.3 permission leak.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H9</td>
+            <td><strong>No rate-limit anywhere</strong></td>
+            <td>5 rapid requests to <code>/api/inventory/*</code> at ~180 ms consistent — no throttle. Bulk endpoints (<code>beta/import</code>, <code>servers/bulk</code>) accept large lists.</td>
+            <td><span class="status partial">Partial</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H10</td>
+            <td><strong>Force-match doesn't verify target <code>server_id</code> ownership</strong></td>
+            <td>Multi-tenant cross-fleet control.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+          <tr>
+            <td class="hid">H11</td>
+            <td><strong>Mass-assignment via JSON PUT — unknown fields silently persisted</strong></td>
+            <td>Server-side property injection into DB rows. Composes with P1.3 to give a full-payload template.</td>
+            <td><span class="status">Blocked</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <strong>To close these:</strong> provide an authenticated admin session on
+      staging (or a screencap of the Network tab during a real login), one
+      non-admin Steam account for the H8 escalation test, and the
+      <code>auth</code> + <code>admin</code> backend files. That converts 8 of
+      the 11 above from Blocked to Confirmed / Refuted.
+    </div>
+  </section>
+
+  <section id="patcher">
+    <div class="section-head">
+      <h2>Client-side patcher — status</h2>
+      <span class="count">Separate deliverable</span>
+    </div>
+
+    <div class="body-text">
+      <p>
+        The Windows client patcher (<code>source/p446/p446_patcher.cpp</code>,
+        34 patches, targets <code>csgo_gc.dll v0.7.6.8</code>) is a disk patcher
+        on top of the P446 fork — not a port of the mikkokko/csgo_gc upstream.
+        Everything the patcher touches (18 detectors, 3 auto-update entry points,
+        HWID cave, SMBIOS/MachineGuid inline, GetPublicIP randomisation, distinct
+        Steam handles per call-site, RestartLoop kill) is content the P446 fork
+        <em>added on top of</em> mikkokko upstream — none of it exists in the
+        upstream tree.
+      </p>
+      <p>
+        <strong>Verdict:</strong> release-ready. Post-patch verify pass
+        confirms every byte. Version fingerprint check refuses to touch a
+        non-<code>v0.7.6.8</code> build rather than corrupting it. Recent
+        upstream commits (through <code>ccd769f</code> 2026-07-23) are all
+        CMake / graphics / crypto-lib swaps and do not affect what the patcher
+        touches.
+      </p>
+      <p>
+        <strong>Three optional hardenings</strong> — not blockers, defence in depth:
+        turn <code>p446_memcheck</code> from read-only observer into an active
+        restorer; scan for indirect IAT calls to <code>WinTrustVerify</code>
+        that the current inline patch might miss; audit whether any patched
+        region indirectly enters the OpenSSL graffiti-signing path (upstream
+        commit <code>aae0b5f</code> flags OpenSSL as unstable there).
+        Full comparison: <code>docs/p446_audit/PATCHER_vs_UPSTREAM.md</code>.
+      </p>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="section-head">
+      <h2>Fix roadmap</h2>
+    </div>
+
+    <div class="roadmap">
+      <div class="roadmap-col" data-when="now">
+        <h4><span class="when">Now</span>· before public release</h4>
+        <ul>
+          <li>Firewall port 3000 to CF + DDoS-Guard IPs only <span class="fid">P0.3 · P1.7 · P2.6</span></li>
+          <li>Bind Postgres to <code>127.0.0.1</code> <span class="fid">P0.1</span></li>
+          <li>Bind or stop MySQL <span class="fid">P0.2</span></li>
+          <li>Auth-gate <code>/api/inventory/&lt;steamId&gt;</code> + regex-validate input <span class="fid">P0.7</span></li>
+          <li>Reduce <code>/api/pay/recent</code> to aggregates <span class="fid">P0.5</span></li>
+          <li>Relative Location + allowlist <code>reason=</code> <span class="fid">P0.6</span></li>
+          <li>Fail-closed on <code>CertOpenSystemStore</code> failure; pin cert <span class="fid">P0.10</span></li>
+          <li>Retire legacy shared SERVER_TOKEN mode <span class="fid">P0.8</span></li>
+          <li>Sign the installer (Sectigo/DigiCert) <span class="fid">P0.4</span></li>
+          <li>Return generic 403 without <code>missingPermission</code> <span class="fid">P1.3</span></li>
+        </ul>
+      </div>
+
+      <div class="roadmap-col" data-when="week">
+        <h4><span class="when">Week 1</span>· post-release</h4>
+        <ul>
+          <li>Deploy application CSP in Report-Only <span class="fid">P1.6</span></li>
+          <li>Fix HSTS at CF edge <span class="fid">P1.1</span></li>
+          <li>Allowlist CORS origins <span class="fid">P1.2</span></li>
+          <li>Dedicated <code>system.seed</code> permission or remove endpoint <span class="fid">P1.5</span></li>
+          <li>Hash + rotate SERVER_TOKEN per SRCDS; store in secrets manager <span class="fid">P0.8</span></li>
+          <li>Signed manifest fetch (short-TTL HMAC) <span class="fid">P0.11</span></li>
+          <li>Strip PDB paths (<code>/PDBALTPATH</code>) <span class="fid">P0.9</span></li>
+          <li>Trim <code>/api/auth/callback/steam</code> error path <span class="fid">P2.7</span></li>
+          <li>Signature-first webhook validation order <span class="fid">P2.8</span></li>
+          <li>Restrict <code>/api/pay/status</code> to auth <span class="fid">P2.5</span></li>
+        </ul>
+      </div>
+
+      <div class="roadmap-col" data-when="quarter">
+        <h4><span class="when">Quarter</span>· hygiene</h4>
+        <ul>
+          <li>Enforce application CSP <span class="fid">P1.6</span></li>
+          <li>Strict SteamID validation everywhere <span class="fid">P2.4</span></li>
+          <li>SPF <code>-all</code> + DKIM + DMARC quarantine → reject <span class="fid">P2.3</span></li>
+          <li>Remove <code>X-Powered-By</code>, tighten <code>robots.txt</code> <span class="fid">P2.1 · P2.2</span></li>
+          <li>Tighten <code>Allow-Headers</code> <span class="fid">P1.4</span></li>
+          <li>Obtain owner-authorised admin session; convert 8 hypotheses <span class="fid">H1–H11</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Project446 · pre-release audit · 2026-07-24</div>
+    <div>Consolidates CHECKPOINT_01 + CHECKPOINT_02 · PoC in <code>docs/p446_audit/poc/</code></div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var t = document.getElementById('ttog');
+  if (!t) return;
+  function apply(mode) {
+    if (mode === 'dark' || mode === 'light') {
+      document.documentElement.setAttribute('data-theme', mode);
+      try { localStorage.setItem('p446-theme', mode); } catch (e) {}
+    }
+  }
+  try {
+    var stored = localStorage.getItem('p446-theme');
+    if (stored) apply(stored);
+  } catch (e) {}
+  t.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) {
+      cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    apply(cur === 'dark' ? 'light' : 'dark');
+  });
+})();
+</script>

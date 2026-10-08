@@ -1,0 +1,451 @@
+<title>Project446 Security Audit Report</title>
+<style>
+  :root {
+    --bg: #FAFAF8; --bg-card: #FFFFFF; --bg-code: #F3F3F0;
+    --text: #1C1C1F; --text-muted: #6B6B73; --text-dim: #9C9CA3;
+    --border: #E5E5E2; --border-subtle: #EDEDEA;
+    --accent: #3B5BDB; --accent-light: #EBF0FF;
+    --critical: #DC2626; --critical-bg: #FEF2F2;
+    --high: #EA580C; --high-bg: #FFF7ED;
+    --medium: #CA8A04; --medium-bg: #FEFCE8;
+    --low: #16A34A; --low-bg: #F0FDF4;
+    --info: #6B7280; --info-bg: #F9FAFB;
+    --confirmed: #059669; --not-vuln: #9CA3AF;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#141416;--bg-card:#1E1E22;--bg-code:#252528;
+    --text:#E8E8EC;--text-muted:#9C9CA0;--text-dim:#6B6B70;
+    --border:#2E2E34;--border-subtle:#252528;
+    --accent:#6B8AFF;--accent-light:#1A2040;
+    --critical:#F87171;--critical-bg:#2A1515;
+    --high:#FB923C;--high-bg:#2A1E15;
+    --medium:#FACC15;--medium-bg:#2A2815;
+    --low:#4ADE80;--low-bg:#152A1A;
+    --info:#9CA3AF;--info-bg:#1A1A1E;
+    --confirmed:#34D399;--not-vuln:#6B7280;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#141416;--bg-card:#1E1E22;--bg-code:#252528;
+    --text:#E8E8EC;--text-muted:#9C9CA0;--text-dim:#6B6B70;
+    --border:#2E2E34;--border-subtle:#252528;
+    --accent:#6B8AFF;--accent-light:#1A2040;
+    --critical:#F87171;--critical-bg:#2A1515;
+    --high:#FB923C;--high-bg:#2A1E15;
+    --medium:#FACC15;--medium-bg:#2A2815;
+    --low:#4ADE80;--low-bg:#152A1A;
+    --info:#9CA3AF;--info-bg:#1A1A1E;
+    --confirmed:#34D399;--not-vuln:#6B7280;
+  }
+  :root[data-theme="light"]{
+    --bg:#FAFAF8;--bg-card:#FFFFFF;--bg-code:#F3F3F0;
+    --text:#1C1C1F;--text-muted:#6B6B73;--text-dim:#9C9CA3;
+    --border:#E5E5E2;--border-subtle:#EDEDEA;
+    --accent:#3B5BDB;--accent-light:#EBF0FF;
+    --critical:#DC2626;--critical-bg:#FEF2F2;
+    --high:#EA580C;--high-bg:#FFF7ED;
+    --medium:#CA8A04;--medium-bg:#FEFCE8;
+    --low:#16A34A;--low-bg:#F0FDF4;
+    --info:#6B7280;--info-bg:#F9FAFB;
+    --confirmed:#059669;--not-vuln:#9CA3AF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+  h1{font-size:1.75rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.25rem}
+  h2{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)}
+  h3{font-size:1rem;font-weight:600;margin:1.5rem 0 .5rem}
+  p{margin-bottom:.75rem}
+  code{font-family:ui-monospace,'Cascadia Code',monospace;font-size:.85em;background:var(--bg-code);padding:.15em .35em;border-radius:3px}
+  pre{background:var(--bg-code);padding:1rem;border-radius:6px;overflow-x:auto;font-size:.8rem;line-height:1.5;margin:.75rem 0;font-family:ui-monospace,monospace}
+  .subtitle{color:var(--text-muted);font-size:.95rem;margin-bottom:2rem}
+  .meta{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;font-size:.85rem;color:var(--text-muted);margin-bottom:2rem;padding:1rem;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:8px}
+  .meta span{white-space:nowrap}
+  .meta strong{color:var(--text);font-weight:600}
+
+  .sev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.75rem;margin:1rem 0 2rem}
+  .sev-card{padding:1rem;border-radius:8px;text-align:center;border:1px solid var(--border-subtle)}
+  .sev-card .num{font-size:2rem;font-weight:800;line-height:1}
+  .sev-card .label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem}
+  .sev-critical{background:var(--critical-bg);border-color:color-mix(in srgb,var(--critical) 30%,transparent)}
+  .sev-critical .num,.sev-critical .label{color:var(--critical)}
+  .sev-high{background:var(--high-bg);border-color:color-mix(in srgb,var(--high) 30%,transparent)}
+  .sev-high .num,.sev-high .label{color:var(--high)}
+  .sev-medium{background:var(--medium-bg);border-color:color-mix(in srgb,var(--medium) 30%,transparent)}
+  .sev-medium .num,.sev-medium .label{color:var(--medium)}
+  .sev-low{background:var(--low-bg);border-color:color-mix(in srgb,var(--low) 30%,transparent)}
+  .sev-low .num,.sev-low .label{color:var(--low)}
+  .sev-info{background:var(--info-bg);border-color:color-mix(in srgb,var(--info) 30%,transparent)}
+  .sev-info .num,.sev-info .label{color:var(--info)}
+
+  table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.75rem 0}
+  th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border-subtle)}
+  th{font-weight:600;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;background:var(--bg-code)}
+  tr:hover td{background:var(--accent-light)}
+  .overflow-x{overflow-x:auto}
+
+  .badge{display:inline-block;font-size:.7rem;font-weight:700;padding:.15em .5em;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;vertical-align:middle}
+  .badge-p0{background:var(--critical-bg);color:var(--critical);border:1px solid color-mix(in srgb,var(--critical) 25%,transparent)}
+  .badge-p1{background:var(--high-bg);color:var(--high);border:1px solid color-mix(in srgb,var(--high) 25%,transparent)}
+  .badge-p2{background:var(--medium-bg);color:var(--medium);border:1px solid color-mix(in srgb,var(--medium) 25%,transparent)}
+  .badge-p3{background:var(--low-bg);color:var(--low);border:1px solid color-mix(in srgb,var(--low) 25%,transparent)}
+  .badge-ok{background:var(--low-bg);color:var(--confirmed);border:1px solid color-mix(in srgb,var(--confirmed) 25%,transparent)}
+  .badge-na{background:var(--info-bg);color:var(--info);border:1px solid color-mix(in srgb,var(--info) 25%,transparent)}
+
+  .finding{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:8px;padding:1.25rem;margin:.75rem 0}
+  .finding-header{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.5rem}
+  .finding-id{font-weight:700;font-size:.9rem}
+  .finding-title{font-weight:600;font-size:.95rem}
+  .finding p{font-size:.9rem;color:var(--text-muted);margin-bottom:.5rem}
+  .finding .repro{font-size:.8rem;margin-top:.5rem}
+  .finding .fix{font-size:.85rem;margin-top:.75rem;padding:.75rem;background:var(--low-bg);border-radius:6px;border-left:3px solid var(--low)}
+  .finding .fix strong{color:var(--text)}
+
+  .infra-row{display:grid;grid-template-columns:80px 1fr 100px;gap:.5rem;padding:.5rem .75rem;border-bottom:1px solid var(--border-subtle);font-size:.85rem;align-items:center}
+  .infra-row:first-child{font-weight:600;color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;background:var(--bg-code)}
+  .port-num{font-family:ui-monospace,monospace;font-weight:600}
+
+  .toc{list-style:none;padding:0;font-size:.9rem;columns:2}
+  .toc li{padding:.2rem 0}
+  .toc a{color:var(--accent);text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+
+  .stamp{font-size:.75rem;color:var(--text-dim);margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border-subtle);text-align:center}
+  @media(max-width:640px){.sev-grid{grid-template-columns:repeat(2,1fr)}.toc{columns:1}.infra-row{grid-template-columns:60px 1fr 80px}}
+</style>
+
+<div class="wrap">
+
+<h1>Project446.su &mdash; Security Audit Report</h1>
+<p class="subtitle">Pre-release penetration test &bull; Owner-authorized black-box + authenticated (USER role)</p>
+
+<div class="meta">
+  <span><strong>Target:</strong> project446.su, gc.project446.su</span>
+  <span><strong>Origin:</strong> 213.152.43.203</span>
+  <span><strong>Date:</strong> 2026-07-24</span>
+  <span><strong>Scope:</strong> Full-stack web + infra</span>
+  <span><strong>Auth level:</strong> USER (no admin)</span>
+  <span><strong>Method:</strong> OWASP + custom</span>
+</div>
+
+<h2 id="summary">Executive Summary</h2>
+
+<p>The audit identified <strong>22 confirmed vulnerabilities</strong> across infrastructure, application, and authentication layers. Seven are rated Critical (P0), five are High (P1), and the rest are Medium to Informational. The most severe findings are <strong>database ports exposed to the internet</strong>, <strong>unauthenticated PII leakage</strong>, and <strong>cross-tenant inventory read without authorization</strong>.</p>
+
+<div class="sev-grid">
+  <div class="sev-card sev-critical"><div class="num">7</div><div class="label">Critical</div></div>
+  <div class="sev-card sev-high"><div class="num">5</div><div class="label">High</div></div>
+  <div class="sev-card sev-medium"><div class="num">7</div><div class="label">Medium</div></div>
+  <div class="sev-card sev-info"><div class="num">3</div><div class="label">Info</div></div>
+  <div class="sev-card sev-low"><div class="num">14</div><div class="label">Tested OK</div></div>
+</div>
+
+<h2 id="toc">Table of Contents</h2>
+<ul class="toc">
+  <li><a href="#summary">Executive Summary</a></li>
+  <li><a href="#infra">Infrastructure Map</a></li>
+  <li><a href="#arch">Architecture</a></li>
+  <li><a href="#findings-p0">P0 &mdash; Critical Findings</a></li>
+  <li><a href="#findings-p1">P1 &mdash; High Findings</a></li>
+  <li><a href="#findings-p2">P2 &mdash; Medium Findings</a></li>
+  <li><a href="#findings-info">Informational</a></li>
+  <li><a href="#negative">Negative Results (Tested OK)</a></li>
+  <li><a href="#untested">Not Testable (Requires Admin)</a></li>
+  <li><a href="#api-map">Full API Surface Map</a></li>
+  <li><a href="#recommendations">Prioritized Recommendations</a></li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="infra">Infrastructure Map</h2>
+<p>All services run on a single host <code>213.152.43.203</code> (<code>mail.project446.su</code>). No isolation between mail, application, and database tiers.</p>
+
+<div class="overflow-x">
+<div style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+  <div class="infra-row"><span>Port</span><span>Service</span><span>Status</span></div>
+  <div class="infra-row"><span class="port-num">22</span><span>OpenSSH 9.6p1 Ubuntu 24.04</span><span><span class="badge badge-p2">Public</span></span></div>
+  <div class="infra-row"><span class="port-num">80/443</span><span>DDoS-Guard &rarr; gc.project446.su (GC backend)</span><span><span class="badge badge-ok">Filtered</span></span></div>
+  <div class="infra-row"><span class="port-num">443</span><span>Cloudflare &rarr; project446.su (Next.js app)</span><span><span class="badge badge-ok">Filtered</span></span></div>
+  <div class="infra-row"><span class="port-num">3000</span><span>Next.js &mdash; <strong>directly exposed, bypasses all WAF</strong></span><span><span class="badge badge-p0">P0</span></span></div>
+  <div class="infra-row"><span class="port-num">3306</span><span>MySQL / MariaDB</span><span><span class="badge badge-p0">P0</span></span></div>
+  <div class="infra-row"><span class="port-num">5432</span><span>PostgreSQL (SSL negotiation confirmed)</span><span><span class="badge badge-p0">P0</span></span></div>
+  <div class="infra-row"><span class="port-num">25</span><span>SMTP</span><span><span class="badge badge-na">Filtered</span></span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="arch">Architecture</h2>
+<p>Two separate applications behind two different CDN/DDoS services:</p>
+<div class="overflow-x"><table>
+<tr><th>Domain</th><th>CDN</th><th>Stack</th><th>Auth</th><th>API Prefix</th></tr>
+<tr><td><code>project446.su</code></td><td>Cloudflare</td><td>Next.js App Router + NextAuth.js (JWE A256GCM)</td><td>Steam OpenID via NextAuth</td><td><code>/api/</code></td></tr>
+<tr><td><code>gc.project446.su</code></td><td>DDoS-Guard</td><td>Custom backend (C++, upstream mikkokko/csgo_gc)</td><td>Steam OpenID (own implementation)</td><td><code>/api/admin/</code></td></tr>
+</table></div>
+<p>Session cookies (<code>__Secure-next-auth.session-token</code>) are scoped to <code>project446.su</code> and do not propagate to the <code>gc.</code> subdomain. The two apps use entirely separate authentication systems.</p>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="findings-p0">P0 &mdash; Critical Findings</h2>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.1</span> <span class="finding-title">PostgreSQL 5432 open to internet</span></div>
+  <p>The server responds to postgres SSL negotiation from any source IP. Combined with all services on one host, a brute-force or CVE exploitation leads to full database compromise.</p>
+  <pre>python -c "import socket,struct; s=socket.socket(); s.connect(('213.152.43.203',5432)); s.send(struct.pack('!II',8,80877103)); print(s.recv(1))"
+# Returns b'S' (SSL supported)</pre>
+  <div class="fix"><strong>Fix:</strong> Bind postgres to <code>127.0.0.1</code> in <code>postgresql.conf</code>. Use WireGuard/IPsec if remote replica access is needed.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.2</span> <span class="finding-title">MySQL 3306 open to internet</span></div>
+  <p>Same class as P0.1. If a second DB is in use &mdash; bind to loopback. If unused &mdash; stop the daemon entirely.</p>
+  <div class="fix"><strong>Fix:</strong> <code>bind-address = 127.0.0.1</code> in <code>my.cnf</code>.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.3</span> <span class="finding-title">Next.js :3000 bypasses all WAF/DDoS protection</span></div>
+  <p>Every API path is reachable at <code>http://213.152.43.203:3000/...</code> with zero rate-limiting, no TLS, no JS challenge. Cloudflare and DDoS-Guard are completely bypassed. 10/10 rapid requests returned HTTP 200 with no throttling.</p>
+  <pre>curl -s http://213.152.43.203:3000/api/pay/recent   # PII leak, no auth, no WAF</pre>
+  <div class="fix"><strong>Fix:</strong> Firewall :3000 to accept only from the reverse proxy (or loopback). <code>ufw allow from 127.0.0.1 to any port 3000</code>.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.4</span> <span class="finding-title">Setup.exe not Authenticode-signed</span></div>
+  <p><code>Get-AuthenticodeSignature</code> reports <code>Status: NotSigned</code>. MITM of the download or browsing session can substitute a payload with no signature warning.</p>
+  <div class="fix"><strong>Fix:</strong> Buy a code-signing certificate (Sectigo/DigiCert), sign with SHA-256 + timestamp countersignature.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.5</span> <span class="finding-title">/api/pay/recent &mdash; unauthenticated PII leakage</span></div>
+  <p>Returns full donor list including <code>steamId64</code>, display name, avatar URL, donation amount, payment method, and timestamp &mdash; <strong>without any authentication</strong>. Works on both Cloudflare-fronted and direct origin.</p>
+  <pre>curl -s https://project446.su/api/pay/recent
+{"donations":[{"name":"iliodor21","steamId64":"76561199831924243","amount":350,"method":"yoomoney",...},...]}</pre>
+  <div class="fix"><strong>Fix:</strong> Require authentication. If a public donor wall is intended, strip <code>steamId64</code> and show only display names + amounts.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.6</span> <span class="finding-title">Internal origin URL leak in HTTP Location header</span></div>
+  <p>All payment endpoints redirect to <code>https://0.0.0.0:3000/pay/failed?reason=...</code>, confirming the app is bound to <code>0.0.0.0</code> (all interfaces) and exposing the internal port.</p>
+  <pre>Location: https://0.0.0.0:3000/pay/failed?reason=unknown_method</pre>
+  <div class="fix"><strong>Fix:</strong> Replace <code>0.0.0.0</code> with the canonical public hostname in redirect URLs. Bind Next.js to <code>127.0.0.1:3000</code>.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p0">P0</span> <span class="finding-id">P0.7</span> <span class="finding-title">/api/inventory/{steamId} &mdash; unauthenticated cross-tenant IDOR</span></div>
+  <p>Any user's inventory is readable by anyone without authentication. The dynamic Next.js route <code>/api/inventory/[steamId]</code> accepts arbitrary SteamID64 values and returns full inventory data. Donor SteamIDs from P0.5 can be used to enumerate inventories at scale.</p>
+  <pre>curl -s https://project446.su/api/inventory/76561199831924243
+{"steam_id":"76561199831924243","items":[...]}</pre>
+  <div class="fix"><strong>Fix:</strong> Require authentication. Return only the authenticated user's own inventory, or add an explicit <code>inventory.view</code> permission check for viewing other users.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="findings-p1">P1 &mdash; High Findings</h2>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p1">P1</span> <span class="finding-id">P1.1</span> <span class="finding-title">HSTS downgrade via Cloudflare rewrite (max-age=0)</span></div>
+  <p>Origin sends <code>max-age=63072000; includeSubDomains; preload</code>. Cloudflare rewrites to <code>max-age=0</code>. First-visit browsers accept HTTP for the site.</p>
+  <div class="fix"><strong>Fix:</strong> Set the same <code>max-age=63072000</code> at the Cloudflare edge.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p1">P1</span> <span class="finding-id">P1.2</span> <span class="finding-title">Wildcard CORS on admin API</span></div>
+  <p><code>Access-Control-Allow-Origin: *</code> on <code>/api/admin/*</code> OPTIONS. While <code>Allow-Credentials</code> is absent (cookies won't send cross-origin), the full admin route inventory is enumerable from any web page.</p>
+  <div class="fix"><strong>Fix:</strong> Echo <code>Origin</code> back only if it's in an allowlist.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p1">P1</span> <span class="finding-id">P1.3</span> <span class="finding-title">RBAC permission names leaked in 403 error bodies</span></div>
+  <p>Every 403 response includes <code>{"error":"Forbidden","missingPermission":"beta.view"}</code>, revealing the complete PBAC model. An attacker can enumerate all 36 permissions without any access.</p>
+  <pre>GET /api/admin/beta   → {"missingPermission":"beta.view"}
+GET /api/users        → {"missingPermission":"users.view"}
+POST /api/seed        → {"missingPermission":"news.edit"}</pre>
+  <div class="fix"><strong>Fix:</strong> Return generic <code>{"error":"Forbidden"}</code> without the <code>missingPermission</code> field. Log the detail server-side.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p1">P1</span> <span class="finding-id">P1.4</span> <span class="finding-title">CSP is Report-Only with unsafe-inline + unsafe-eval</span></div>
+  <p>The Content-Security-Policy is set to <code>Report-Only</code> mode with <code>unsafe-inline</code> and <code>unsafe-eval</code> directives. Any XSS vulnerability achieves full impact &mdash; the CSP provides zero protection.</p>
+  <div class="fix"><strong>Fix:</strong> Switch to enforcing CSP. Remove <code>unsafe-inline</code>/<code>unsafe-eval</code>. Use nonce-based script loading.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p1">P1</span> <span class="finding-id">P1.5</span> <span class="finding-title">/api/seed endpoint mapped to wrong RBAC permission</span></div>
+  <p>The <code>/api/seed</code> endpoint requires <code>news.edit</code> permission instead of a dedicated <code>seed.execute</code> or <code>system.seed</code> permission. Any user with news editing privileges can trigger database seeding.</p>
+  <div class="fix"><strong>Fix:</strong> Create a dedicated permission for seed operations. Assign it to super-admin role only.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="findings-p2">P2 &mdash; Medium Findings</h2>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.1</span> <span class="finding-title">SPF soft-fail (~all) instead of hard-fail</span></div>
+  <p>SPF uses <code>~all</code> (soft-fail). Spoofed emails from <code>@project446.su</code> pass at many MTAs.</p>
+  <div class="fix"><strong>Fix:</strong> Switch to <code>-all</code>. Add DKIM + DMARC (<code>p=reject</code>).</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.2</span> <span class="finding-title">X-Powered-By: Next.js header disclosure</span></div>
+  <p>Stack fingerprinting. No direct harm but narrows attacker's search space.</p>
+  <div class="fix"><strong>Fix:</strong> <code>poweredByHeader: false</code> in <code>next.config.js</code>.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.3</span> <span class="finding-title">robots.txt allows everything</span></div>
+  <p>Admin and API paths will end up in search engine caches.</p>
+  <div class="fix"><strong>Fix:</strong> <code>Disallow: /api/</code> and <code>Disallow: /admin/</code>.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.4</span> <span class="finding-title">/api/pay/status exposes payment configuration without auth</span></div>
+  <p>Returns <code>{"enabled":false,"primeThreshold":350,"methods":{"yoomoney":true,"anypay":false}}</code> to unauthenticated requests. Leaks business logic: the 350 RUB threshold, which providers are active.</p>
+  <div class="fix"><strong>Fix:</strong> Require authentication or remove from public API.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.5</span> <span class="finding-title">Zero rate-limiting on direct origin :3000</span></div>
+  <p>10 sequential requests in under 1 second &mdash; all returned HTTP 200 with full data. No throttling, CAPTCHA, or IP-based blocking. Enables brute-force and enumeration at machine speed.</p>
+  <div class="fix"><strong>Fix:</strong> Add rate-limiting middleware (e.g., <code>express-rate-limit</code> or nginx <code>limit_req</code>). Most importantly, firewall :3000.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.6</span> <span class="finding-title">Payment webhook signature validation not verifiable (payments disabled)</span></div>
+  <p><code>POST /api/pay/yoomoney</code> with fake <code>sha1_hash=0000...</code> returns <code>303 reason=disabled</code>, not <code>reason=invalid_signature</code>. The enabled-check short-circuits before signature validation. When payments are re-enabled, if no signature check exists, anyone can forge a YooMoney webhook to grant Prime for free.</p>
+  <div class="fix"><strong>Fix:</strong> Validate <code>sha1_hash</code> <strong>before</strong> checking the enabled flag. Return <code>400 Bad Signature</code> for invalid hashes regardless of payment state.</div>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-p2">P2</span> <span class="finding-id">P2.7</span> <span class="finding-title">GC admin 403 vs 401 inconsistency leaks endpoint existence</span></div>
+  <p>On <code>gc.project446.su</code>: <code>/api/admin/users</code> returns <strong>403</strong> (Forbidden), while <code>/api/admin/whitelist</code> returns <strong>401</strong> (Unauthorized). Different codes for similar endpoints leak which ones exist and which have additional auth layers.</p>
+  <div class="fix"><strong>Fix:</strong> Standardize to 401 for all unauthenticated requests, 403 only after successful authentication.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="findings-info">Informational</h2>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-na">INFO</span> <span class="finding-id">I1</span> <span class="finding-title">RSC header triggers Internal Server Error</span></div>
+  <p>Sending <code>RSC: 1</code> with <code>Next-Router-State-Tree: dummy</code> returns <code>Internal Server Error</code>. No data leak, but indicates unhandled edge case in Next.js App Router.</p>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-na">INFO</span> <span class="finding-id">I2</span> <span class="finding-title">Two error dialects across apps</span></div>
+  <p>Next.js returns <code>{"error":"Unauthorized"}</code> (JSON), GC returns <code>Login required (admin only).</code> (plaintext HTML). Inconsistency aids fingerprinting.</p>
+</div>
+
+<div class="finding">
+  <div class="finding-header"><span class="badge badge-na">INFO</span> <span class="finding-id">I3</span> <span class="finding-title">Weak SteamID validation on frontend</span></div>
+  <p>Accepts <code>\d{15,20}</code> instead of exactly 17 digits starting with <code>7656119</code>. Not exploitable if server re-validates, but inventory API accepted <code>00000000000000000</code> and returned empty items.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="negative">Negative Results (Tested OK)</h2>
+
+<div class="overflow-x"><table>
+<tr><th>Test</th><th>Result</th><th>Notes</th></tr>
+<tr><td>Self-prime via <code>POST /api/me/prime</code></td><td><span class="badge badge-ok">405</span></td><td>Method not allowed &mdash; properly blocked</td></tr>
+<tr><td>NextAuth callback URL open redirect</td><td><span class="badge badge-ok">OK</span></td><td><code>evil.example</code> rewritten to <code>project446.su</code></td></tr>
+<tr><td>Session cookie flags</td><td><span class="badge badge-ok">OK</span></td><td><code>__Host-</code>, <code>__Secure-</code>, <code>SameSite=Lax</code>, <code>Secure</code>, <code>HttpOnly</code></td></tr>
+<tr><td>JWE alg:none attack</td><td><span class="badge badge-ok">OK</span></td><td>Returns empty session <code>{}</code> &mdash; token properly rejected</td></tr>
+<tr><td>JWE truncated/invalid token</td><td><span class="badge badge-ok">OK</span></td><td>Returns <code>{}</code> &mdash; graceful failure</td></tr>
+<tr><td>SQL injection via inventory steamId</td><td><span class="badge badge-ok">OK</span></td><td><code>'OR'1'='1</code> treated as literal string, no error</td></tr>
+<tr><td>Prototype pollution via JSON body</td><td><span class="badge badge-ok">OK</span></td><td><code>__proto__</code> in body ignored, no role escalation</td></tr>
+<tr><td>X-Forwarded-For IP spoofing</td><td><span class="badge badge-ok">OK</span></td><td>Still returns 403 &mdash; not used for auth</td></tr>
+<tr><td>HTTP method override (X-HTTP-Method-Override)</td><td><span class="badge badge-ok">OK</span></td><td>Ignored &mdash; GET remained GET</td></tr>
+<tr><td>CRLF injection in payment method</td><td><span class="badge badge-ok">OK</span></td><td>No header injection in Location</td></tr>
+<tr><td>GC OpenID: op_endpoint swap</td><td><span class="badge badge-ok">OK</span></td><td>Returns 401 "Steam auth failed"</td></tr>
+<tr><td>GC OpenID: signature strip</td><td><span class="badge badge-ok">OK</span></td><td>Returns 401 "Steam auth failed"</td></tr>
+<tr><td>GC OpenID: identity mismatch</td><td><span class="badge badge-ok">OK</span></td><td>Returns 401 "Steam auth failed"</td></tr>
+<tr><td>Source map exposure (<code>.js.map</code>)</td><td><span class="badge badge-ok">404</span></td><td>Not served</td></tr>
+</table></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="untested">Not Testable (Requires Admin Access)</h2>
+
+<div class="overflow-x"><table>
+<tr><th>ID</th><th>Hypothesis</th><th>Why Untestable</th><th>Risk if True</th></tr>
+<tr><td>H2</td><td>KV injection via inventory import <code>custom_name</code></td><td>Requires <code>inventory.edit</code></td><td>Arbitrary item metadata, inventory corruption</td></tr>
+<tr><td>H3</td><td>SSRF via <code>case_url</code> in patrol</td><td>Requires <code>patrol.edit</code></td><td>Internal service access, credential theft</td></tr>
+<tr><td>H4</td><td>SQL injection in <code>medals</code>/<code>paint_kit</code> integer fields</td><td>Requires <code>inventory.edit</code></td><td>Full DB access</td></tr>
+<tr><td>H6</td><td>Fleet tokens stored in plaintext</td><td>Requires DB access</td><td>Fleet server compromise on DB leak</td></tr>
+<tr><td>H7</td><td>OTA publish &mdash; verify-after-write race</td><td>Requires <code>updates.upload</code></td><td>Malicious module delivery to clients</td></tr>
+<tr><td>H8</td><td>Mass-assign <code>is_admin</code> via profile PUT</td><td>Admin profile endpoints return 404 from project446.su (hosted on gc.)</td><td>Privilege escalation</td></tr>
+<tr><td>H9</td><td>Rate-limit absence on bulk endpoints</td><td>Requires admin to test <code>beta/import</code>, <code>servers/bulk</code></td><td>DoS, resource exhaustion</td></tr>
+</table></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="api-map">Full API Surface Map</h2>
+<h3>project446.su (Next.js)</h3>
+<div class="overflow-x"><table>
+<tr><th>Endpoint</th><th>Methods</th><th>Auth</th><th>Finding</th></tr>
+<tr><td><code>/api/auth/session</code></td><td>GET</td><td>Cookie</td><td>&mdash;</td></tr>
+<tr><td><code>/api/auth/providers</code></td><td>GET</td><td>None</td><td>&mdash;</td></tr>
+<tr><td><code>/api/auth/csrf</code></td><td>GET</td><td>None</td><td>&mdash;</td></tr>
+<tr><td><code>/api/auth/signin/steam</code></td><td>GET</td><td>None</td><td>&mdash;</td></tr>
+<tr><td><code>/api/auth/callback/steam</code></td><td>GET</td><td>None</td><td>Validated OK</td></tr>
+<tr><td><code>/api/me/prime</code></td><td>GET</td><td>Cookie</td><td>POST &rarr; 405</td></tr>
+<tr><td><code>/api/news</code></td><td>GET</td><td>None</td><td>&mdash;</td></tr>
+<tr><td><code>/api/pay/recent</code></td><td>GET</td><td><strong>None!</strong></td><td><span class="badge badge-p0">P0.5</span></td></tr>
+<tr><td><code>/api/pay/status</code></td><td>GET</td><td>None</td><td><span class="badge badge-p2">P2.4</span></td></tr>
+<tr><td><code>/api/pay/create</code></td><td>POST</td><td>None</td><td>Disabled (303)</td></tr>
+<tr><td><code>/api/pay/yoomoney</code></td><td>POST</td><td>None</td><td><span class="badge badge-p2">P2.6</span></td></tr>
+<tr><td><code>/api/pay/anypay</code></td><td>POST</td><td>None</td><td>Disabled (303)</td></tr>
+<tr><td><code>/api/pay/webhook</code></td><td>POST</td><td>None</td><td>Unknown method</td></tr>
+<tr><td><code>/api/pay/callback</code></td><td>POST</td><td>None</td><td>Unknown method</td></tr>
+<tr><td><code>/api/pay/return</code></td><td>GET</td><td>&mdash;</td><td>405</td></tr>
+<tr><td><code>/api/inventory/[steamId]</code></td><td>GET</td><td><strong>None!</strong></td><td><span class="badge badge-p0">P0.7</span></td></tr>
+<tr><td><code>/api/admin/beta</code></td><td>GET</td><td>RBAC</td><td><span class="badge badge-p1">P1.3</span> leak</td></tr>
+<tr><td><code>/api/users</code></td><td>GET</td><td>RBAC</td><td><span class="badge badge-p1">P1.3</span> leak</td></tr>
+<tr><td><code>/api/seed</code></td><td>POST</td><td>RBAC</td><td><span class="badge badge-p1">P1.5</span> wrong perm</td></tr>
+</table></div>
+
+<h3>gc.project446.su (GC Backend)</h3>
+<div class="overflow-x"><table>
+<tr><th>Endpoint</th><th>Auth Status</th><th>Notes</th></tr>
+<tr><td><code>/auth/login</code></td><td>302 &rarr; Steam OpenID</td><td>Separate from NextAuth</td></tr>
+<tr><td><code>/auth/callback</code></td><td>OpenID verified</td><td>op_endpoint swap, sig strip &mdash; all rejected</td></tr>
+<tr><td><code>/api/admin/users</code></td><td>403 (empty body)</td><td>Exists, requires auth</td></tr>
+<tr><td><code>/api/admin/penalties</code></td><td>403 (empty body)</td><td>Exists, requires auth</td></tr>
+<tr><td><code>/api/admin/servers</code></td><td>403 (empty body)</td><td>Exists, requires auth</td></tr>
+<tr><td><code>/api/admin/whitelist</code></td><td>401</td><td><span class="badge badge-p2">P2.7</span> inconsistency</td></tr>
+<tr><td><code>/api/admin/patrol</code></td><td>401</td><td>Same</td></tr>
+<tr><td><code>/api/admin/matchmaking</code></td><td>404</td><td>Not implemented</td></tr>
+<tr><td><code>/api/admin/drops</code></td><td>404</td><td>Not implemented</td></tr>
+<tr><td><code>/api/admin/update</code></td><td>404</td><td>Not implemented</td></tr>
+</table></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2 id="recommendations">Prioritized Recommendations</h2>
+
+<h3>Immediate (before launch)</h3>
+<ol>
+<li><strong>Firewall databases:</strong> Bind PostgreSQL and MySQL to <code>127.0.0.1</code></li>
+<li><strong>Firewall :3000:</strong> Block external access to Next.js direct port</li>
+<li><strong>Fix /api/pay/recent:</strong> Require authentication or strip PII</li>
+<li><strong>Fix /api/inventory/[steamId]:</strong> Require authentication + authorization check</li>
+<li><strong>Remove <code>missingPermission</code></strong> from 403 responses</li>
+<li><strong>Fix /api/seed RBAC mapping:</strong> Change from <code>news.edit</code> to dedicated permission</li>
+<li><strong>Fix Location header:</strong> Replace <code>0.0.0.0:3000</code> with canonical hostname</li>
+</ol>
+
+<h3>Before external audit</h3>
+<ol start="8">
+<li><strong>Enable enforcing CSP:</strong> Remove <code>unsafe-inline</code>/<code>unsafe-eval</code>, use nonces</li>
+<li><strong>Fix HSTS at CF edge:</strong> Set <code>max-age=63072000</code></li>
+<li><strong>Fix CORS:</strong> Replace <code>Access-Control-Allow-Origin: *</code> with origin allowlist</li>
+<li><strong>Validate webhook signatures FIRST:</strong> Before checking enabled flag</li>
+<li><strong>Sign Setup.exe:</strong> Authenticode with SHA-256</li>
+<li><strong>Harden DNS:</strong> SPF <code>-all</code>, add DKIM + DMARC</li>
+<li><strong>robots.txt:</strong> Disallow <code>/api/</code> and <code>/admin/</code></li>
+<li><strong>Remove X-Powered-By</strong></li>
+</ol>
+
+<h3>After launch</h3>
+<ol start="16">
+<li><strong>Rate-limiting</strong> on all API endpoints</li>
+<li><strong>Admin-level audit</strong> of hypotheses H2&ndash;H9</li>
+<li><strong>Standardize error responses</strong> across both apps</li>
+<li><strong>Network segmentation:</strong> Separate DB, app, and mail services</li>
+</ol>
+
+<div class="stamp">
+  Project446 Security Audit Report &bull; 2026-07-24 &bull; Generated by automated penetration testing toolkit<br>
+  <strong>22 findings confirmed</strong> &bull; 14 negative results &bull; 7 hypotheses pending admin access
+</div>
+
+</div>

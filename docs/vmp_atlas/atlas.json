@@ -1,0 +1,643 @@
+{
+  "0x20889a18": {
+    "rva": 545823256,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "rasetsuu",
+        "note": "push imm captured"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x7ffd3d39b89e": {
+    "rva": 140725630646430,
+    "section": ".#?n",
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "rasetsuu",
+        "note": "CRC*31 decrypt window at .#?n"
+      }
+    ],
+    "decrypted_bytes": {
+      "rasetsuu": {
+        "vip_va": 140732073097374,
+        "enc": "",
+        "dec": "",
+        "cipher": "CRC*31 XOR"
+      }
+    },
+    "llvm_ir": [],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x7ffd3d24f467": {
+    "rva": 140725629285479,
+    "section": ".#?n",
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "rasetsuu",
+        "note": "CRC*31 decrypt window at .#?n"
+      }
+    ],
+    "decrypted_bytes": {
+      "rasetsuu": {
+        "vip_va": 140732071736423,
+        "enc": "",
+        "dec": "",
+        "cipher": "CRC*31 XOR"
+      }
+    },
+    "llvm_ir": [],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x7ffd3d010021": {
+    "rva": 140725626929185,
+    "section": ".text",
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "rasetsuu",
+        "note": "CRC*31 decrypt window at .text"
+      }
+    ],
+    "decrypted_bytes": {
+      "rasetsuu": {
+        "vip_va": 140732069380129,
+        "enc": "",
+        "dec": "",
+        "cipher": "CRC*31 XOR"
+      }
+    },
+    "llvm_ir": [],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x7ffd3d1bdf61": {
+    "rva": 140725628690273,
+    "section": ".#I5",
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "rasetsuu",
+        "note": "CRC*31 decrypt window at .#I5"
+      }
+    ],
+    "decrypted_bytes": {
+      "rasetsuu": {
+        "vip_va": 140732071141217,
+        "enc": "",
+        "dec": "",
+        "cipher": "CRC*31 XOR"
+      }
+    },
+    "llvm_ir": [],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x374254": {
+    "rva": 3621460,
+    "section": null,
+    "seed_key": 524321,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "Mergen",
+        "note": "LLVM 18.1.8 lifted"
+      },
+      {
+        "tool": "Mergen",
+        "note": "LLVM 18.1.8 lifted"
+      },
+      {
+        "tool": "pushan",
+        "note": "Stage-1 VPC-sensitive flat CFG"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "Mergen",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\Mergen\\build_iced\\output_0x374254.ll",
+        "size": 750
+      },
+      {
+        "tool": "Mergen",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\Mergen\\build_iced\\output_no_opts_0x374254.ll",
+        "size": 705
+      }
+    ],
+    "next_hops": [],
+    "extras": {
+      "pushan": {
+        "blocks": 10,
+        "vpc_register": null,
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\pushan_proto\\run_374254\\flat_cfg.json"
+      }
+    }
+  },
+  "0x1ab7e6": {
+    "rva": 1751014,
+    "section": ".#I5",
+    "seed_key": 524321,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "Mergen",
+        "note": "LLVM 18.1.8 lifted"
+      },
+      {
+        "tool": "t04_eversinc33",
+        "note": "pseudo-LLVM lifted"
+      },
+      {
+        "tool": "pushan",
+        "note": "Stage-1 VPC-sensitive flat CFG"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "Mergen",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\Mergen\\build_iced\\output_no_opts.ll",
+        "size": 705
+      },
+      {
+        "tool": "t04_eversinc33",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t04_eversinc33_llvm_devirt\\vmenter_1AB7E6.ll.txt"
+      }
+    ],
+    "next_hops": [],
+    "extras": {
+      "pushan": {
+        "blocks": 10,
+        "vpc_register": null,
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\pushan_proto\\run_1ab7e6\\flat_cfg.json"
+      }
+    }
+  },
+  "0x1e1d26": {
+    "rva": 1973542,
+    "section": ".#I5",
+    "seed_key": 2169095700,
+    "handler_class": "obfuscated_computed_ret_thunk (RECLASSIFIED)",
+    "sources": [
+      {
+        "tool": "t04_eversinc33",
+        "note": "pseudo-LLVM lifted"
+      },
+      {
+        "tool": "t07_hackyboiz_triton",
+        "note": "Triton\u2192LLVM IR"
+      },
+      {
+        "tool": "t09_thalium",
+        "note": "Triton symbolic execution trace"
+      },
+      {
+        "tool": "pushan",
+        "note": "Stage-1 VPC-sensitive flat CFG"
+      },
+      {
+        "tool": "attack_1e1d26",
+        "note": "Full walk: 51 native x86-64 insns, ret to caller_rdi+0xffffffff81ea5f78; NOT a VMEnter."
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t04_eversinc33",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t04_eversinc33_llvm_devirt\\vmenter_1AB7E6.ll.txt"
+      },
+      {
+        "tool": "t07_hackyboiz_triton",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t07_triton_vmp\\lifted\\handler_1e1d26.ll"
+      }
+    ],
+    "next_hops": [],
+    "extras": {
+      "triton_traces": [
+        {
+          "tool": "t09_thalium",
+          "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t09_thalium_devirt\\thalium_devirt_1E1D26.json",
+          "size": 27135
+        }
+      ],
+      "pushan": {
+        "blocks": 10,
+        "vpc_register": null,
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\pushan_proto\\run_1e1d26\\flat_cfg.json"
+      },
+      "attack_1e1d26": {
+        "chain_path": "C:/Users/sshunko/source/repos/tools/attack_1e1d26/chain.json",
+        "pseudocode_path": "C:/Users/sshunko/source/repos/tools/attack_1e1d26/pseudocode.c",
+        "real_code_md": "C:/Users/sshunko/source/repos/tools/attack_1e1d26/REAL_CODE.md",
+        "reclassification": "obfuscated_computed_ret_thunk (interior of RUNTIME_FUNCTION 0x1df5f3..0x2389f8)",
+        "confidence": "HIGH (95%) for reclassification",
+        "final_native_target": "unresolved_symbolic (caller_rdi + 0xffffffff81ea5f78)",
+        "insns_count": 51,
+        "handlers_walked": 7,
+        "pushed_seed": "0x8149c614",
+        "runtime_function_range": [
+          "0x1df5f3",
+          "0x2389f8"
+        ]
+      }
+    }
+  },
+  "0x206677": {
+    "rva": 2123383,
+    "section": ".#I5",
+    "seed_key": 875408033,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "t04_eversinc33",
+        "note": "pseudo-LLVM lifted"
+      },
+      {
+        "tool": "t09_thalium",
+        "note": "Triton symbolic execution trace"
+      },
+      {
+        "tool": "pushan",
+        "note": "Stage-1 VPC-sensitive flat CFG"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t04_eversinc33",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t04_eversinc33_llvm_devirt\\vmenter_1AB7E6.ll.txt"
+      }
+    ],
+    "next_hops": [],
+    "extras": {
+      "triton_traces": [
+        {
+          "tool": "t09_thalium",
+          "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t09_thalium_devirt\\thalium_devirt_206677.json",
+          "size": 32426
+        }
+      ],
+      "pushan": {
+        "blocks": 10,
+        "vpc_register": null,
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\pushan_proto\\run_206677\\flat_cfg.json"
+      }
+    }
+  },
+  "0x211691": {
+    "rva": 2168465,
+    "section": ".#I5",
+    "seed_key": 545823256,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "t04_eversinc33",
+        "note": "pseudo-LLVM lifted"
+      },
+      {
+        "tool": "t09_thalium",
+        "note": "Triton symbolic execution trace"
+      },
+      {
+        "tool": "pushan",
+        "note": "Stage-1 VPC-sensitive flat CFG"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t04_eversinc33",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t04_eversinc33_llvm_devirt\\vmenter_1AB7E6.ll.txt"
+      }
+    ],
+    "next_hops": [],
+    "extras": {
+      "triton_traces": [
+        {
+          "tool": "t09_thalium",
+          "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t09_thalium_devirt\\thalium_devirt_211691.json",
+          "size": 60257
+        }
+      ],
+      "pushan": {
+        "blocks": 10,
+        "vpc_register": null,
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\pushan_proto\\run_211691\\flat_cfg.json"
+      }
+    }
+  },
+  "0x196677": {
+    "rva": 1664631,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "note": "Triton\u2192LLVM IR"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t07_triton_vmp\\lifted\\handler_196677.ll"
+      }
+    ],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x1a2a66": {
+    "rva": 1714790,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "note": "Triton\u2192LLVM IR"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t07_triton_vmp\\lifted\\handler_1a2a66.ll"
+      }
+    ],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x1e2699": {
+    "rva": 1975961,
+    "section": null,
+    "seed_key": null,
+    "handler_class": "bswap+udiv (MBA collapse)",
+    "sources": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "note": "Triton\u2192LLVM IR"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t07_triton_vmp\\lifted\\handler_1e2699.ll"
+      }
+    ],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0x1e57ca": {
+    "rva": 1988554,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "note": "Triton\u2192LLVM IR"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "t07_hackyboiz_triton",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t07_triton_vmp\\lifted\\handler_1e57ca.ll"
+      }
+    ],
+    "next_hops": [],
+    "extras": {}
+  },
+  "0xa": {
+    "rva": 10,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "t09_thalium",
+        "note": "Triton symbolic execution trace"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [],
+    "next_hops": [],
+    "extras": {
+      "triton_traces": [
+        {
+          "tool": "t09_thalium",
+          "path": "C:\\Users\\sshunko\\source\\repos\\tools\\t09_thalium_devirt\\thalium_devirt_all.json",
+          "size": 1560
+        }
+      ]
+    }
+  },
+  "0x2ba769": {
+    "rva": 2860905,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "devirt_vmprotect3",
+        "note": "Triton PE-direct loader"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "devirt_vmprotect3",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\devirt_vmprotect3\\fvac_run\\hdl_7ffebd24a769\\hdl_7ffebd24a769.ll"
+      }
+    ],
+    "next_hops": [
+      {
+        "tool": "devirt_vmprotect3",
+        "next_va": 140733705660613,
+        "next_rva_hex": "0x618fa8c5"
+      }
+    ],
+    "extras": {}
+  },
+  "0x35a2ad": {
+    "rva": 3515053,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "devirt_vmprotect3",
+        "note": "Triton PE-direct loader"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "devirt_vmprotect3",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\devirt_vmprotect3\\fvac_run\\hdl_7ffebd2ea2ad\\hdl_7ffebd2ea2ad.ll"
+      }
+    ],
+    "next_hops": [
+      {
+        "tool": "devirt_vmprotect3",
+        "next_va": 140733705660613,
+        "next_rva_hex": "0x618fa8c5"
+      }
+    ],
+    "extras": {}
+  },
+  "0x365a58": {
+    "rva": 3562072,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "devirt_vmprotect3",
+        "note": "Triton PE-direct loader"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "devirt_vmprotect3",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\devirt_vmprotect3\\fvac_run\\hdl_7ffebd2f5a58\\hdl_7ffebd2f5a58.ll"
+      }
+    ],
+    "next_hops": [
+      {
+        "tool": "devirt_vmprotect3",
+        "next_va": 140733705660613,
+        "next_rva_hex": "0x618fa8c5"
+      }
+    ],
+    "extras": {}
+  },
+  "0x389661": {
+    "rva": 3708513,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "devirt_vmprotect3",
+        "note": "Triton PE-direct loader"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "devirt_vmprotect3",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\devirt_vmprotect3\\fvac_run\\hdl_7ffebd319661\\hdl_7ffebd319661.ll"
+      }
+    ],
+    "next_hops": [
+      {
+        "tool": "devirt_vmprotect3",
+        "next_va": 140733705660613,
+        "next_rva_hex": "0x618fa8c5"
+      }
+    ],
+    "extras": {}
+  },
+  "0x3ed6d9": {
+    "rva": 4118233,
+    "section": null,
+    "seed_key": null,
+    "handler_class": null,
+    "sources": [
+      {
+        "tool": "devirt_vmprotect3",
+        "note": "Triton PE-direct loader"
+      },
+      {
+        "tool": "pushan",
+        "note": "Stage-1 VPC-sensitive flat CFG"
+      }
+    ],
+    "decrypted_bytes": {},
+    "llvm_ir": [
+      {
+        "tool": "devirt_vmprotect3",
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\devirt_vmprotect3\\fvac_run\\hdl_7ffebd37d6d9\\hdl_7ffebd37d6d9.ll"
+      }
+    ],
+    "next_hops": [
+      {
+        "tool": "devirt_vmprotect3",
+        "next_va": 140733705660613,
+        "next_rva_hex": "0x618fa8c5"
+      }
+    ],
+    "extras": {
+      "pushan": {
+        "blocks": 10,
+        "vpc_register": null,
+        "path": "C:\\Users\\sshunko\\source\\repos\\tools\\pushan_proto\\run_3ed6d9\\flat_cfg.json"
+      }
+    }
+  },
+  "_meta": {
+    "generated_from": "docs/vmp_atlas/build_atlas.py",
+    "target": {
+      "static_dll": "C:/Users/sshunko/source/repos/MyDriver23/source/dlls/FuckVacV2.dll (2224128B)",
+      "dump_dll": "C:/Users/sshunko/source/repos/MyDriver23/source/dlls/FuckVacV2_dump.dll (4546560B)",
+      "image_base_dump": "0x7FFEBCF90000",
+      "image_base_static": "0x180000000",
+      "vmp_version": "3.6-3.10.5"
+    },
+    "totals": {
+      "vmenters_catalogued": 5,
+      "handlers_devirt": 14,
+      "iat_entries_from_t20": 123
+    },
+    "confirmed_facts": {
+      "cipher": "CRC*31 XOR stream (Rasetsuu src/decrypt.rs::OpcodeCryptor)",
+      "register_roles": {
+        "VIP": "RSI",
+        "VSP": "RBP",
+        "ROLLING_KEY": "RBX",
+        "VMREGs_base": "RDI",
+        "HANDLER_TABLE": "R12",
+        "IMAGEBASE": "R13"
+      },
+      "shared_dispatcher_va": "0x7FFEBD34A085 (all 5 devirt'd handlers converge here)",
+      "on_disk_section": ".#?n (backs everything; .#I5 raw=0 in packed, VMP decrypts at TLS callback)"
+    },
+    "sources": [
+      "t02_cfg_sig",
+      "t03_ida_vmp_hunter",
+      "t04_eversinc33_llvm_devirt",
+      "t06_hackyboiz",
+      "t07_hackyboiz_triton",
+      "t08_ticklingvmp",
+      "t09_thalium_devirt",
+      "t12_oasif",
+      "t13_ticklingvmp_part23",
+      "t18_hadengue",
+      "t19_0xnobody",
+      "t20_vmp_imports",
+      "rasetsuu (vmprotect-research)",
+      "Mergen",
+      "devirt_vmprotect3",
+      "pushan_proto"
+    ]
+  }
+}
