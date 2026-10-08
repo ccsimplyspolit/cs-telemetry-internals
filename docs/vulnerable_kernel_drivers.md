@@ -127,7 +127,7 @@ sc start <name>
 
 ### Roadmap: integration of KDU-style into KernelDriverMapper
 
-TODO for future releases: extended provider table in `KernelDriverMapper.exe` with fallback logic. Significant work — 65 providers, each with own exploitation payload. See [`docs/DRIVER_HARDENING.md`](DRIVER_HARDENING.md) roadmap P2.
+TODO for future releases: extended provider table in `KernelDriverMapper.exe` with fallback logic. Significant work — 65 providers, each with own exploitation payload. See `docs/DRIVER_HARDENING.md` roadmap P2.
 
 ### Legal
 
@@ -135,7 +135,7 @@ TODO for future releases: extended provider table in `KernelDriverMapper.exe` wi
 - **Using** vulnerable driver for kernel r/w in **your own system** — legal (personal research).
 - **Using** against a machine you don't have access to — CFAA / CMA / StGB § 202a violation.
 
-See [`ETHICS.md`](ETHICS.md).
+See `ETHICS.md`.
 
 ---
 
@@ -262,7 +262,7 @@ sc start <name>
 
 ### Roadmap: интеграция KDU-стиля в KernelDriverMapper
 
-TODO для будущих релизов: extended provider table в `KernelDriverMapper.exe` с fallback logic. Значительная работа — 65 providers, каждый со своим exploitation payload'ом. См. [`docs/DRIVER_HARDENING.md`](DRIVER_HARDENING.md) roadmap P2.
+TODO для будущих релизов: extended provider table в `KernelDriverMapper.exe` с fallback logic. Значительная работа — 65 providers, каждый со своим exploitation payload'ом. См. `docs/DRIVER_HARDENING.md` roadmap P2.
 
 ### Legal
 
@@ -270,4 +270,4 @@ TODO для будущих релизов: extended provider table в `KernelDri
 - **Использование** vulnerable driver для kernel r/w в **твоей own system** — legal (personal research).
 - **Использование** против machine, к которой у тебя нет доступа — CFAA / CMA / StGB § 202a violation.
 
-См. [`ETHICS.md`](ETHICS.md).
+См. `ETHICS.md`.

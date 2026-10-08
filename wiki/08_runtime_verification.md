@@ -2,8 +2,8 @@
 
 Live-memory verification that VLB's 4 hooks (H1/H2/H3/H4) land on the correct targets in the current CS2 build. Reproducible on any future depot.
 
-Location: [`scripts/runtime_verify/`](../../scripts/runtime_verify/)
-Latest JSON result: [`docs/rt_verify_all_hooks_result.json`](../../docs/rt_verify_all_hooks_result.json).
+Location: `scripts/runtime_verify/`
+Latest JSON result: `docs/rt_verify_all_hooks_result.json`.
 
 ---
 
@@ -70,7 +70,7 @@ All sigs come from `constexpr` literals in the VLB source; the verification scri
 
 ## Latest verified result (PID 53000, build 14170)
 
-Raw JSON: [`docs/rt_verify_all_hooks_result.json`](../../docs/rt_verify_all_hooks_result.json).
+Raw JSON: `docs/rt_verify_all_hooks_result.json`.
 
 Modules found:
 
@@ -146,8 +146,8 @@ Not implemented — verification is currently manual.
 
 ## Cross-refs
 
-- Result JSON: [`docs/rt_verify_all_hooks_result.json`](../../docs/rt_verify_all_hooks_result.json)
-- Release notes referencing the verification: [`docs/RELEASE_NOTES_v1.15-claude.md`](../../docs/RELEASE_NOTES_v1.15-claude.md) §1
-- Morning report with full parity table: [`docs/MORNING_REPORT_2026-07-16.md`](../../docs/MORNING_REPORT_2026-07-16.md)
-- VLB source sigs (source of truth): [`source/dlls/VacLiveBypass/src/hooks/`](../../source/dlls/VacLiveBypass/src/hooks/)
+- Result JSON: `docs/rt_verify_all_hooks_result.json`
+- Release notes referencing the verification: `docs/RELEASE_NOTES_v1.15-claude.md` §1
+- Morning report with full parity table: `docs/MORNING_REPORT_2026-07-16.md`
+- VLB source sigs (source of truth): `source/dlls/VacLiveBypass/src/hooks/`
 - Depot update procedure: [09_depot_updates.md](09_depot_updates.md)

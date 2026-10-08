@@ -63,7 +63,7 @@ static NTSTATUS SafeCopy(PEPROCESS target, PVOID addr, SIZE_T size, PVOID buf, B
 
 **Now**: driver worker thread polls cs2 itself. User-mode console communicates via SHM (`\BaseNamedObjects\...State`).
 
-**As in HexSyncService** (see [NLINJECTOR_REVERSE.md](NLINJECTOR_REVERSE.md)):
+**As in HexSyncService** (see NLINJECTOR_REVERSE.md):
 - Driver creates `\Device\HexSyncService`
 - Registers 6 IOCTL handlers
 - User-mode via `CreateFileW("\\.\HexSyncService")` + `DeviceIoControl`
@@ -95,7 +95,7 @@ All three tasks — part of **CS2UnifiedInjector `--method kernel`** IOCTL flow.
 
 **Idea**: our `KernelDriverMapper.exe` uses only `iqvw64e.sys` (Intel NAL). If this driver is blocklisted (Win11 22H2), inject breaks.
 
-**KDU-style**: 65 fallback providers. When one fails — try next. See table in [NLINJECTOR_REVERSE.md](NLINJECTOR_REVERSE.md) or [KDU providers.md](https://github.com/hfiref0x/KDU/blob/master/Help/providers.md).
+**KDU-style**: 65 fallback providers. When one fails — try next. See table in NLINJECTOR_REVERSE.md or [KDU providers.md](https://github.com/hfiref0x/KDU/blob/master/Help/providers.md).
 
 **Implementation**: extended `KernelDriverMapper.exe` with provider table and exploitation logic for each. Significant amount of code — separate roadmap.
 
@@ -191,7 +191,7 @@ static NTSTATUS SafeCopy(PEPROCESS target, PVOID addr, SIZE_T size, PVOID buf, B
 
 **Сейчас**: driver worker thread опрашивает cs2 сам. User-mode консоль общается через SHM (`\BaseNamedObjects\...State`).
 
-**Как в HexSyncService** (см. [NLINJECTOR_REVERSE.md](NLINJECTOR_REVERSE.md)):
+**Как в HexSyncService** (см. NLINJECTOR_REVERSE.md):
 - Driver создаёт `\Device\HexSyncService`
 - Registers 6 IOCTL handler'ов
 - User-mode через `CreateFileW("\\.\HexSyncService")` + `DeviceIoControl`
@@ -223,7 +223,7 @@ static NTSTATUS SafeCopy(PEPROCESS target, PVOID addr, SIZE_T size, PVOID buf, B
 
 **Идея**: наш `KernelDriverMapper.exe` использует только `iqvw64e.sys` (Intel NAL). Если этот driver blocklisted (Win11 22H2), инжект ломается.
 
-**KDU-style**: 65 fallback провайдеров. При провале одного — пробуем следующий. См. таблицу в [NLINJECTOR_REVERSE.md](NLINJECTOR_REVERSE.md) или [KDU providers.md](https://github.com/hfiref0x/KDU/blob/master/Help/providers.md).
+**KDU-style**: 65 fallback провайдеров. При провале одного — пробуем следующий. См. таблицу в NLINJECTOR_REVERSE.md или [KDU providers.md](https://github.com/hfiref0x/KDU/blob/master/Help/providers.md).
 
 **Реализация**: extended `KernelDriverMapper.exe` с провайдер-таблицей и exploitation logic для каждого. Значительное количество кода — отдельный roadmap.
 

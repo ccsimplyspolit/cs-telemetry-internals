@@ -1,6 +1,6 @@
 # 02 — VacLiveBypass (VLB)
 
-Source root: [`source/dlls/VacLiveBypass/`](../../source/dlls/VacLiveBypass/)
+Source root: `source/dlls/VacLiveBypass/`
 Product binary: `fva_recon.dll` (~82 KB)
 Origin: 1:1 reimplementation of `FuckVacAgain.dll` (VMP 3.6+), reversed via Hex-Rays over the Scylla-unpacked rebuild.
 
@@ -12,7 +12,7 @@ VLB is the flagship of this repository. It is the only project that lives inside
 
 Every tick (64 Hz) the CS2 client builds a `CSGOUserCmdPB` protobuf holding the player's input: viewangles, buttons, subtick state, movement axes. VLB detours three CS2 functions and, when armed, injects fabricated `CSGOInputHistoryEntryPB` entries into `input_history` (proto tag 2 on the CSGOUserCmdPB). The server's rewind step reads these entries to time-align hit registration; falsified entries move the server-side aim reconstruction away from the real click position, producing an anti-aim effect.
 
-The mutation is ~30 lines in [`src/hooks/phase_b2.cpp::run_fva_section_j_emitter`](../../source/dlls/VacLiveBypass/src/hooks/phase_b2.cpp). Everything else is scaffolding, sig-scan, gate logic, arena bookkeeping, crash protection.
+The mutation is ~30 lines in `src/hooks/phase_b2.cpp::run_fva_section_j_emitter`. Everything else is scaffolding, sig-scan, gate logic, arena bookkeeping, crash protection.
 
 ---
 
@@ -29,7 +29,7 @@ All four verified in live cs2 memory on 2026-07-16 (PID 53000, build 14170):
 
 Install method: **5-byte inline JMP rel32** (`E9 XX XX XX XX`) via MinHook. Same install pattern FVA uses (see `docs/reversing/fulldiff_client_dll.csv` rows 2/3/4 in the sibling repo).
 
-Runtime JSON proof: [`docs/rt_verify_all_hooks_result.json`](../../docs/rt_verify_all_hooks_result.json).
+Runtime JSON proof: `docs/rt_verify_all_hooks_result.json`.
 
 ---
 
@@ -38,17 +38,17 @@ Runtime JSON proof: [`docs/rt_verify_all_hooks_result.json`](../../docs/rt_verif
 A single byte controls whether Section-J (the viewangle wrap + input_history reconstruction) runs.
 
 - **FVA original:** `byte_7FFBE823A9A0` at FVA image + `0x23A9A0`. Init at `0x7FFBE80CA00B` (FNV1a-64 key `0xB6E8F068409FEF6C` decrypts `dword_7FFBE823A9CC`, result → gate byte). Check at `0x7FFBE80CA6B4` (`cmp cs:byte_7FFBE823A9A0, r13b(=0); jz loc_7FFBE80CAA2F`). Non-zero → armed.
-- **VLB equivalent:** [`FVA_GATE_MODE`](../../source/dlls/VacLiveBypass/CMakeLists.txt) compile-time flag:
+- **VLB equivalent:** `FVA_GATE_MODE` compile-time flag:
   - `byte` — reads FVA gate semantics (equivalent to armed byte).
   - `attack` — additional policy: only emit on fire (LMB/RMB detected via dual-path CUserCmd raw+0x60 OR CInButtonStatePB protobuf).
 
-Byte mode = FVA-original 1:1. Attack mode = minimal detection surface (~10 % ticks emit). Detailed semantics: [`source/dlls/SafetyPlugin_recovered/docs/gate_byte_logic.md`](../../source/dlls/SafetyPlugin_recovered/docs/gate_byte_logic.md).
+Byte mode = FVA-original 1:1. Attack mode = minimal detection surface (~10 % ticks emit). Detailed semantics: `source/dlls/SafetyPlugin_recovered/docs/gate_byte_logic.md`.
 
 ---
 
 ## Section-J emitter (the mutation)
 
-Location: [`src/hooks/phase_b2.cpp::run_fva_section_j_emitter`](../../source/dlls/VacLiveBypass/src/hooks/phase_b2.cpp)
+Location: `src/hooks/phase_b2.cpp::run_fva_section_j_emitter`
 
 Per emit (up to 15 subticks per tick):
 
@@ -94,7 +94,7 @@ Recovered from the descriptor blob at FVA `0x7FFBE8210A00..0x7FFBE82163xx`. Meth
 
 Factory: `CSGOInputHistoryEntryPB::New` @ FVA RVA `0x742730`, size **120 B**. Signature `B9 78` is NOT unique — must disambiguate via RTTI ("`?AVCSGOInputHistoryEntryPB@@`" descriptor xref) per memory `fva-targets-input-history`. Byte 4 of the ctor sled is `0x10`, not `0x08` (memory `cs2-t-new-rva-hardcoded`).
 
-Full schema table: [`source/dlls/SafetyPlugin_recovered/docs/protobuf_schema.md`](../../source/dlls/SafetyPlugin_recovered/docs/protobuf_schema.md).
+Full schema table: `source/dlls/SafetyPlugin_recovered/docs/protobuf_schema.md`.
 
 **Not touched by Section-J:** `subtick_moves` (proto tag 18 on `CBaseUserCmdPB`). Any VLB code path that mutates subtick_moves is a parity divergence.
 
@@ -109,7 +109,7 @@ VLB uses 4 hashes to look up CS2 globals, 1:1 with FVA:
 - `k_fire_flag_byte_hash` — the fire-flag byte (memory `FVA no hotkey`)
 - `k_live_subtick_counter_hash` — subtick counter
 
-The main gate hash is FNV1a-64 `0xB6E8F068409FEF6C` (decrypts `dword_7FFBE823A9CC` at FVA gate init). Source: [`source/dlls/VacLiveBypass/src/hooks/game_state_resolver.cpp`](../../source/dlls/VacLiveBypass/src/hooks/game_state_resolver.cpp).
+The main gate hash is FNV1a-64 `0xB6E8F068409FEF6C` (decrypts `dword_7FFBE823A9CC` at FVA gate init). Source: `source/dlls/VacLiveBypass/src/hooks/game_state_resolver.cpp`.
 
 ---
 
@@ -130,7 +130,7 @@ auto untag_msg_arena = [](std::uint8_t* msg) -> std::uint64_t {
 
 **`ArenaStringPtr::Set` this-pointer bug** (task #84): `move_crc` is a tagged-pointer field (bit 0 = kAllocated, bit 1 = kMutableArena, bit 2 = kDefault). You MUST pass `&move_crc` (address of slot), not `move_crc` (value). Passing value crashes cs2 in ~10 seconds.
 
-Details: [`source/dlls/VacLiveBypass/README.md`](../../source/dlls/VacLiveBypass/README.md) §2.
+Details: [`source/dlls/VacLiveBypass/README.md`](..\README.md) §2.
 
 ---
 
@@ -148,7 +148,7 @@ Early port bug: forcing branch C to grow crashed cs2 after ~200 ticks (subs->rep
 
 ## Multi-depot support
 
-[`src/version_manifest.h`](../../source/dlls/VacLiveBypass/src/version_manifest.h) has `#if FVA_TARGET_DEPOT == …` blocks:
+`src/version_manifest.h` has `#if FVA_TARGET_DEPOT == …` blocks:
 
 | Depot buildid | client.dll MD5 | Size |
 |---|---|---|
@@ -225,7 +225,7 @@ subtick_moves.size N → 15
 [MOVE_CRC] set ok via ArenaStringPtr::Set
 ```
 
-Metric summary interpretation: [`source/dlls/VacLiveBypass/docs/VERIFICATION_TABLE.md`](../../source/dlls/VacLiveBypass/docs/VERIFICATION_TABLE.md).
+Metric summary interpretation: `source/dlls/VacLiveBypass/docs/VERIFICATION_TABLE.md`.
 
 ---
 
@@ -242,8 +242,8 @@ Details: [07_build_install_usage.md](07_build_install_usage.md).
 ## Cross-refs
 
 - Rebuild source of truth: `C:\vmp\fva_livedump\FuckVacAgain_rebuild.exe`
-- FVA-side pseudo-C: [`source/dlls/SafetyPlugin_recovered/hooks/create_move_hook.pseudo.cpp`](../../source/dlls/SafetyPlugin_recovered/hooks/create_move_hook.pseudo.cpp) — 173 lines, banner "unverified"
+- FVA-side pseudo-C: `source/dlls/SafetyPlugin_recovered/hooks/create_move_hook.pseudo.cpp` — 173 lines, banner "unverified"
 - Runtime verification pipeline: [08_runtime_verification.md](08_runtime_verification.md)
-- Parity check vs FVA: [`source/dlls/SafetyPlugin_recovered/docs/vlb_gap.md`](../../source/dlls/SafetyPlugin_recovered/docs/vlb_gap.md)
-- Full port notes: [`source/dlls/VacLiveBypass/docs/FVA_FULL_PORT_2026-07-10.md`](../../source/dlls/VacLiveBypass/docs/FVA_FULL_PORT_2026-07-10.md)
-- VMP protection dissection: [`docs/VMP_PROTECTION_MECHANICS_FULL.md`](../../docs/VMP_PROTECTION_MECHANICS_FULL.md)
+- Parity check vs FVA: `source/dlls/SafetyPlugin_recovered/docs/vlb_gap.md`
+- Full port notes: `source/dlls/VacLiveBypass/docs/FVA_FULL_PORT_2026-07-10.md`
+- VMP protection dissection: [`docs/VMP_PROTECTION_MECHANICS_FULL.md`](../docs/vmp_protection_mechanics_full.md)

@@ -90,7 +90,7 @@ MyDriver23/
 | H3 SerializePartialToArray | client.dll | `0x11AD520` | 1 unique | verified (+0x40 drift, sig-scan handles it) |
 | H4 ShouldUpdateSequences | animationsystem.dll | `0x14F950` | 1 unique | verified (+0x960 drift, sig-scan handles it) |
 
-Raw JSON: [`../../docs/rt_verify_all_hooks_result.json`](../../docs/rt_verify_all_hooks_result.json).
+Raw JSON: `../../docs/rt_verify_all_hooks_result.json`.
 
 ---
 

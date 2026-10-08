@@ -2,7 +2,7 @@
 
 Single-translation-unit C++ x64 tool that reproduces (without IDA) the VMP invariants documented in `docs/FVA_PROTECTION_STATE.md` and `docs/DRAFT_VM_PAYLOAD_CORRELATION_REVIEW.md`. Point of this tool is **repeatability**: any future FVA build or any other VMP 3.5/3.6+ target can be dropped in and get the same analysis without an IDA license or Hex-Rays.
 
-Source root: [`source/dlls/fva_devirt/`](../../source/dlls/fva_devirt/)
+Source root: `source/dlls/fva_devirt/`
 Binary: `x64\Release\fva_devirt.exe` (~700 lines, no runtime deps other than kernel32 + bcrypt).
 
 ---
@@ -202,8 +202,8 @@ None of these three stages exists in this session. This tool provides the observ
 
 ## Cross-refs
 
-- Source: [`source/dlls/fva_devirt/src/main.cpp`](../../source/dlls/fva_devirt/src/main.cpp)
-- Full VMP dissection: [`docs/VMP_PROTECTION_MECHANICS_FULL.md`](../../docs/VMP_PROTECTION_MECHANICS_FULL.md)
-- FVA-specific state: [`docs/FVA_PROTECTION_STATE.md`](../../docs/FVA_PROTECTION_STATE.md)
-- Correlation review: [`docs/DRAFT_VM_PAYLOAD_CORRELATION_REVIEW.md`](../../docs/DRAFT_VM_PAYLOAD_CORRELATION_REVIEW.md)
-- Alternate approach (native reimplementation): [02_vlb.md](02_vlb.md) / [`source/dlls/VacLiveBypass/`](../../source/dlls/VacLiveBypass/)
+- Source: `source/dlls/fva_devirt/src/main.cpp`
+- Full VMP dissection: [`docs/VMP_PROTECTION_MECHANICS_FULL.md`](../docs/vmp_protection_mechanics_full.md)
+- FVA-specific state: `docs/FVA_PROTECTION_STATE.md`
+- Correlation review: `docs/DRAFT_VM_PAYLOAD_CORRELATION_REVIEW.md`
+- Alternate approach (native reimplementation): [02_vlb.md](02_vlb.md) / `source/dlls/VacLiveBypass/`

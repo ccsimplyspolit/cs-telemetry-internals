@@ -294,7 +294,7 @@ Get-Content C:\vmp\fva_recon.log -Wait -Tail 30
 
 After console signals stop event, drivers can be removed by their `Unload-Spoofer.ps1` companion.
 
-Kernel drivers loaded via `kdu.exe -map` stay in memory until reboot — they have no `DriverUnload` and no `IoCreateDevice`. This is intentional (KDU-style hardening). See [`docs/DRIVER_HARDENING.md`](../../docs/DRIVER_HARDENING.md).
+Kernel drivers loaded via `kdu.exe -map` stay in memory until reboot — they have no `DriverUnload` and no `IoCreateDevice`. This is intentional (KDU-style hardening). See [`docs/DRIVER_HARDENING.md`](../docs/kernel_driver_hardening.md).
 
 ---
 
@@ -326,4 +326,4 @@ Kernel drivers loaded via `kdu.exe -map` stay in memory until reboot — they ha
 - Deep dive per project: [02_vlb.md](02_vlb.md), [03_rankspoofer.md](03_rankspoofer.md), [04_isvalveds.md](04_isvalveds.md).
 - Depot survival: [09_depot_updates.md](09_depot_updates.md).
 - Live parity proof: [08_runtime_verification.md](08_runtime_verification.md).
-- Older wiki INSTALL: [`docs/wiki/INSTALL.md`](../../docs/wiki/INSTALL.md).
+- Older wiki INSTALL: `docs/wiki/INSTALL.md`.

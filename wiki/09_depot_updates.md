@@ -8,7 +8,7 @@ CS2 depots update on `24134959` roughly every 1-2 weeks; build numbers bump with
 
 ## Auto-update matrix
 
-From [`docs/wiki/BUILD_AUDIT.md`](../../docs/wiki/BUILD_AUDIT.md).
+From `docs/wiki/BUILD_AUDIT.md`.
 
 | Category | Projects |
 |---|---|
@@ -48,13 +48,13 @@ Both drivers read their offsets from `HKLM` at `DriverEntry`:
 
 `Load-Spoofer.ps1` fetches fresh offsets from `a2x/cs2-dumper` HEAD and writes them into the registry BEFORE `sc start`. If the network is down, the driver falls back to hardcoded values.
 
-For RankSpoofer this is a **22-offset schema push**; see [`shared.h`](../../source/drivers/CS2RankSpooferDriver/shared.h) v2 for the layout.
+For RankSpoofer this is a **22-offset schema push**; see `shared.h` v2 for the layout.
 
 ---
 
 ## Depot state file
 
-Current snapshot of offsets: [`DEPOT_STATE.md`](../../DEPOT_STATE.md).
+Current snapshot of offsets: `DEPOT_STATE.md`.
 
 Fields on 2026-07-11 (build 14169 / depot 24134959):
 
@@ -191,7 +191,7 @@ VLB pattern-scans with wildcards because RVAs drift on every depot. Sig criteria
 
 If a sig loses uniqueness on a new depot, tighten with additional anchor bytes from the target function's body. Never add wildcards to fix uniqueness — that broadens matches, not narrows them.
 
-Sigs live in [`source/dlls/VacLiveBypass/src/hooks/*.cpp`](../../source/dlls/VacLiveBypass/src/hooks/) as `constexpr std::string_view k_target_sig` literals.
+Sigs live in `source/dlls/VacLiveBypass/src/hooks/*.cpp` as `constexpr std::string_view k_target_sig` literals.
 
 ---
 
@@ -205,14 +205,14 @@ Rare, but happens (e.g. big engine rewrite, protobuf schema break):
 
 Response: bump `FVA_STRICT_FINGERPRINT=ON`, aggressive fingerprint-mismatch abort, do full IDA session on the new client.dll to re-derive: RTTI descriptor xrefs for message classes → New() RVAs → vtable RVAs.
 
-See [`source/dlls/VacLiveBypass/docs/DEPOT_UPDATE_PLAYBOOK.md`](../../source/dlls/VacLiveBypass/docs/DEPOT_UPDATE_PLAYBOOK.md) for the full 30-minute playbook (baseline snapshot, cs2-dumper run, IDA MCP session, T::New via RTTI, vtable RVAs).
+See `source/dlls/VacLiveBypass/docs/DEPOT_UPDATE_PLAYBOOK.md` for the full 30-minute playbook (baseline snapshot, cs2-dumper run, IDA MCP session, T::New via RTTI, vtable RVAs).
 
 ---
 
 ## Cross-refs
 
-- Current snapshot: [`DEPOT_STATE.md`](../../DEPOT_STATE.md)
-- Detailed VLB playbook: [`source/dlls/VacLiveBypass/docs/DEPOT_UPDATE_PLAYBOOK.md`](../../source/dlls/VacLiveBypass/docs/DEPOT_UPDATE_PLAYBOOK.md)
+- Current snapshot: `DEPOT_STATE.md`
+- Detailed VLB playbook: `source/dlls/VacLiveBypass/docs/DEPOT_UPDATE_PLAYBOOK.md`
 - Runtime verification: [08_runtime_verification.md](08_runtime_verification.md)
 - Offset feed: [github.com/a2x/cs2-dumper](https://github.com/a2x/cs2-dumper)
-- Auto-adapt script: [`source/dlls/VacLiveBypass/scripts/auto_adapt_new_depot.ps1`](../../source/dlls/VacLiveBypass/scripts/)
+- Auto-adapt script: `source/dlls/VacLiveBypass/scripts/auto_adapt_new_depot.ps1`

@@ -4,7 +4,7 @@ Reconstructed source-code skeleton of `FuckVacAgain.dll` (internal name: **Safet
 
 **Not for build.** Every `.pseudo.cpp` carries an "unverified" banner and preserves the original decompiled body inline as reference. This tree is a research artefact meant to sit side-by-side with VLB source when diffing for parity.
 
-Source root: [`source/dlls/SafetyPlugin_recovered/`](../../source/dlls/SafetyPlugin_recovered/)
+Source root: `source/dlls/SafetyPlugin_recovered/`
 
 ---
 
@@ -63,7 +63,7 @@ Values relative to the rebuild image base `0x7FFBE8000000` (`C:\vmp\fva_livedump
 | H4 ShouldUpdateSequences | animationsystem.dll +0x14F950 (+0x960 drift) | **CONFIRMED** (runtime-verified) | `animation_hook.cpp` |
 | H_DynamicResolver_Internal | FVA-internal `sub_7FFBE82ED25E` | **VMP-BLOCKED** | n/a (opaque `fva_resolve_import()` boundary) |
 
-Details: [`DEVIRT_STATUS.md`](../../source/dlls/SafetyPlugin_recovered/DEVIRT_STATUS.md).
+Details: `DEVIRT_STATUS.md`.
 
 Legend:
 - **CONFIRMED** — decompiled body matches live-install site AND semantics are cross-validated against VLB port.
@@ -75,7 +75,7 @@ Legend:
 
 ## Gate byte (`byte_7FFBE823A9A0`)
 
-The single ENABLE flag for Section-J. Full write-up in [`docs/gate_byte_logic.md`](../../source/dlls/SafetyPlugin_recovered/docs/gate_byte_logic.md).
+The single ENABLE flag for Section-J. Full write-up in `docs/gate_byte_logic.md`.
 
 Init site (`0x7FFBE80CA00B`):
 ```asm
@@ -119,13 +119,13 @@ Descriptor blob at `0x7FFBE8210A00..0x7FFBE82163xx`. Method-name strings (`Seria
 
 `CSubtickMoveStep`: descriptor @ `0x7FFBE8215FE2`. **Not touched by Section-J.** Any VLB code path mutating `subtick_moves` is a parity divergence.
 
-Full table: [`docs/protobuf_schema.md`](../../source/dlls/SafetyPlugin_recovered/docs/protobuf_schema.md).
+Full table: `docs/protobuf_schema.md`.
 
 ---
 
 ## Reconstruction workflow (6-day playbook)
 
-Consolidated from 16 VMP-Deob docs. Full text: [`docs/playbook.md`](../../source/dlls/SafetyPlugin_recovered/docs/playbook.md).
+Consolidated from 16 VMP-Deob docs. Full text: `docs/playbook.md`.
 
 **Day 1** — OEP capture + Scylla dump + VMEntry site scan.
 - Attach to cs2 via `mydbg --stealth`, INT3/HW BP at `image_base + 0x122C`, deferred `bpdll FuckVacAgain.dll` BEFORE inject.
@@ -144,7 +144,7 @@ Blocking constraint: **5.6 kHz `NtReadVirtualMemory` self-scan on `.text`** kill
 
 ## VLB parity gaps
 
-From [`docs/vlb_gap.md`](../../source/dlls/SafetyPlugin_recovered/docs/vlb_gap.md):
+From `docs/vlb_gap.md`:
 
 **H1 CreateMove:** MATCH. FVA installs 5-byte JMP at `client.dll+0xACEF90`. VLB `create_move_hook.cpp` is a monolithic 1:1 port of `sub_7FFBE80C9D8C` with explicit +offset comments (A.1..K.2, section D `alt_symbol`, section J viewangle wrap). VLB additions not present in FVA: SEH gates, `engine2_stable` gate, `FVA_GATE_MODE_ATTACK` / `FVA_GATE_MODE_BYTE` toggle. Observable side-effects match: cvar zero, alt-byte zero, subtick emit, viewangle echo, scratch mirror, move_crc regen.
 
@@ -174,4 +174,4 @@ From [`docs/vlb_gap.md`](../../source/dlls/SafetyPlugin_recovered/docs/vlb_gap.m
 - FVA immutable original: `C:\vmp\FuckVacAgain.dll` (VMP-locked, static disasm shows all-zero `.text`)
 - Sibling repo tooling: [ccsimplyspolit/VMP-Deob](https://github.com/ccsimplyspolit/VMP-Deob) v2.0
 - Standalone VMP static analyzer: [06_fva_devirt.md](06_fva_devirt.md)
-- VMP mechanics: [`docs/VMP_PROTECTION_MECHANICS_FULL.md`](../../docs/VMP_PROTECTION_MECHANICS_FULL.md)
+- VMP mechanics: [`docs/VMP_PROTECTION_MECHANICS_FULL.md`](../docs/vmp_protection_mechanics_full.md)

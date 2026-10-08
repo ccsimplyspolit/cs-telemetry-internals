@@ -80,4 +80,4 @@ Injecting VLB, RankSpoofer, or IsValveDS into `cs2.exe` while it connects to Val
 - CTF-style controlled infrastructure.
 - Your own CS2 shard (unlikely — but VLB has been used against private CS2 mods).
 
-See [`../../docs/ETHICS.md`](../../docs/ETHICS.md) for the full legal writeup.
+See `../../docs/ETHICS.md` for the full legal writeup.

@@ -70,7 +70,7 @@ Terms, abbreviations, and CS2/reversing jargon used across the wiki.
 
 **KeStackAttachProcess** — attach current thread to another process's address space. Required for cross-proc allocations and PEB walks.
 
-**PsAcquireProcessExitSynchronization** — Windows 8.1+ hard guard preventing target process exit during our writes. See [`docs/DRIVER_HARDENING.md`](../../docs/DRIVER_HARDENING.md) §1.
+**PsAcquireProcessExitSynchronization** — Windows 8.1+ hard guard preventing target process exit during our writes. See [`docs/DRIVER_HARDENING.md`](../docs/kernel_driver_hardening.md) §1.
 
 **SCM / SC** — Service Control Manager. Standard Windows driver loading path (`sc create` + `sc start`).
 
@@ -176,4 +176,4 @@ Terms, abbreviations, and CS2/reversing jargon used across the wiki.
 
 **Bug bounty** — Valve BugHunter program. Legitimate outlet if you find something publishable.
 
-Full legal writeup: [`docs/ETHICS.md`](../../docs/ETHICS.md).
+Full legal writeup: `docs/ETHICS.md`.

@@ -6,9 +6,9 @@ Kernel-mode one-byte spoofer for `C_CSGameRules::m_bIsValveDS`. Two components:
 - **CS2IsValveDSSpooferConsole.exe** — user-mode SHM controller (~206 KB, VT100 TUI).
 
 Source:
-- Driver: [`source/drivers/CS2IsValveDSSpooferDriver/`](../../source/drivers/CS2IsValveDSSpooferDriver/)
-- Console: [`source/apps/CS2IsValveDSSpooferConsole/`](../../source/apps/CS2IsValveDSSpooferConsole/)
-- Kit: [`build/kit_isvalveds/`](../../build/kit_isvalveds/)
+- Driver: `source/drivers/CS2IsValveDSSpooferDriver/`
+- Console: `source/apps/CS2IsValveDSSpooferConsole/`
+- Kit: `build/kit_isvalveds/`
 
 Version: **v1.14-claude** — protocol v2 with Freeze mode (2026-07-15).
 
@@ -52,7 +52,7 @@ Named objects:
 | EVENT | `Global\IsValveDSStop` | `\BaseNamedObjects\IsValveDSStop` |
 | EVENT | `Global\IsValveDSStopped` | `\BaseNamedObjects\IsValveDSStopped` |
 
-Definitions in [`shared.h`](../../source/drivers/CS2IsValveDSSpooferDriver/shared.h) (identical copy in the console).
+Definitions in `shared.h` (identical copy in the console).
 
 Protocol version: **2** (`protocol_version = 2` in SHM header).
 
@@ -98,7 +98,7 @@ KeUnstackDetachProcess(&apc);
 ObDereferenceObject(proc);
 ```
 
-Uses `PsAcquireProcessExitSynchronization` (Windows 8.1+ hard guard) to prevent cs2 exit racing the write. Details: [`docs/DRIVER_HARDENING.md`](../../docs/DRIVER_HARDENING.md) §1.
+Uses `PsAcquireProcessExitSynchronization` (Windows 8.1+ hard guard) to prevent cs2 exit racing the write. Details: [`docs/DRIVER_HARDENING.md`](../docs/kernel_driver_hardening.md) §1.
 
 ---
 
@@ -204,7 +204,7 @@ Driver logs with prefix `[IsVDS]` in DebugView with "Capture Kernel" enabled.
 
 ## Cross-refs
 
-- [`source/drivers/CS2IsValveDSSpooferDriver/README.md`](../../source/drivers/CS2IsValveDSSpooferDriver/README.md)
-- [`source/apps/CS2IsValveDSSpooferConsole/README.md`](../../source/apps/CS2IsValveDSSpooferConsole/README.md)
-- [`build/kit_isvalveds/README.txt`](../../build/kit_isvalveds/README.txt)
-- Release notes: [`docs/RELEASE_NOTES_v1.14-claude.md`](../../docs/RELEASE_NOTES_v1.14-claude.md)
+- [`source/drivers/CS2IsValveDSSpooferDriver/README.md`](..\README.md)
+- [`source/apps/CS2IsValveDSSpooferConsole/README.md`](..\README.md)
+- `build/kit_isvalveds/README.txt`
+- Release notes: `docs/RELEASE_NOTES_v1.14-claude.md`

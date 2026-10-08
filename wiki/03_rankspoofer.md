@@ -6,9 +6,9 @@ Client-side visual spoofer for rank / profile / matchmaking fields in CS2. Two c
 - **CS2RankSpooferConsole.exe** — interactive VT100 TUI (~195 KB).
 
 Source:
-- Driver: [`source/drivers/CS2RankSpooferDriver/`](../../source/drivers/CS2RankSpooferDriver/)
-- Console: [`source/apps/CS2RankSpooferConsole/`](../../source/apps/CS2RankSpooferConsole/)
-- Kit: [`build/kit_rankspoof/`](../../build/kit_rankspoof/)
+- Driver: `source/drivers/CS2RankSpooferDriver/`
+- Console: `source/apps/CS2RankSpooferConsole/`
+- Kit: `build/kit_rankspoof/`
 
 Version: **v1.14-claude** (2026-07-15). This release upgraded the driver from Phase 1 (pattern-scan only, no writes) to **Phase 1.5** (direct-write via `KeStackAttachProcess` + `MmCopyVirtualMemory`).
 
@@ -75,7 +75,7 @@ Named objects (Win32 → NT):
 
 Magic: `RANKSPOOF_MAGIC = 0x52415358` (ASCII `RASX`).
 
-Definitions in [`shared.h`](../../source/drivers/CS2RankSpooferDriver/shared.h) (identical copy in the console).
+Definitions in `shared.h` (identical copy in the console).
 
 ---
 
@@ -169,7 +169,7 @@ Registry key populated by `Load-Spoofer.ps1`:
 
 - **Clan tag** — direct 16-byte write is emitted, but CS2 uses `CUtlSymbolLarge` intern handle; display may show garbage until the intern-table poke lands. `LOG_WARN` fired on first write.
 - **Service medal** — `m_rank[6]` slot struct layout not fully mapped; TODO marker left in driver.
-- **Phase 2 trampoline** — still not implemented. The `RANKSPOOF_CS2_DATA` contract is fully specified in [`shared.h`](../../source/drivers/CS2RankSpooferDriver/shared.h) v2 for future work; `callsite_va` / `original_fn_va` still published for informational Phase-2 debugging.
+- **Phase 2 trampoline** — still not implemented. The `RANKSPOOF_CS2_DATA` contract is fully specified in `shared.h` v2 for future work; `callsite_va` / `original_fn_va` still published for informational Phase-2 debugging.
 
 ---
 
@@ -183,8 +183,8 @@ Registry key populated by `Load-Spoofer.ps1`:
 
 ## Cross-refs
 
-- [`source/drivers/CS2RankSpooferDriver/README.md`](../../source/drivers/CS2RankSpooferDriver/README.md)
-- [`source/apps/CS2RankSpooferConsole/README.md`](../../source/apps/CS2RankSpooferConsole/README.md)
-- [`build/kit_rankspoof/README.txt`](../../build/kit_rankspoof/README.txt)
-- Release notes: [`docs/RELEASE_NOTES_v1.14-claude.md`](../../docs/RELEASE_NOTES_v1.14-claude.md)
-- Driver hardening improvements roadmap: [`docs/DRIVER_HARDENING.md`](../../docs/DRIVER_HARDENING.md)
+- [`source/drivers/CS2RankSpooferDriver/README.md`](..\README.md)
+- [`source/apps/CS2RankSpooferConsole/README.md`](..\README.md)
+- `build/kit_rankspoof/README.txt`
+- Release notes: `docs/RELEASE_NOTES_v1.14-claude.md`
+- Driver hardening improvements roadmap: [`docs/DRIVER_HARDENING.md`](../docs/kernel_driver_hardening.md)
