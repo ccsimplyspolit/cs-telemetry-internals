@@ -54,9 +54,10 @@ All research and reproduction verification were conducted strictly in isolated, 
 
 ---
 
-## Defensive Analysis Tooling
+## Defensive Analysis Tooling & Audit Package
 
-- **[`tools/vac_module_analyzer.py`](tools/vac_module_analyzer.py)** — IDA Pro IDAPython static analysis script for locating and annotating virtual memory inspection primitives (`NtQueryVirtualMemory`, `VirtualQueryEx`, `K32GetMappedFileNameW`).
+- **[Audit Preparation & Architecture Package (`AUDIT_PREP.md`)](AUDIT_PREP.md)** — Trail of Bits-style review goals, scope, data-flow diagram, and automated unit test suite (`3/3 PASS`).
+- **[`tools/vac_module_analyzer.py`](tools/vac_module_analyzer.py)** — Dual-mode (IDA Pro IDAPython + standalone CLI) static analysis script for locating and annotating virtual memory inspection primitives (`NtQueryVirtualMemory`, `VirtualQueryEx`, `K32GetMappedFileNameW`).
 - **[`ccsimplyspolit/protobuf-bounds-auditor`](https://github.com/ccsimplyspolit/protobuf-bounds-auditor)** — Companion static security analyzer for `.proto` definitions (`CWE-1284` unbounded repeated sub-messages and `CWE-20` unvalidated float/double wire fields).
 
 ---
