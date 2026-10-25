@@ -1,5 +1,6 @@
 # Source 2 Network Protocol Auditing, Server Input Validation & Endpoint Telemetry Research
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23640494.svg)](https://doi.org/10.5281/zenodo.23640494)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Type: Security Research / Advisories](https://img.shields.io/badge/Category-Defensive%20Security%20Research-red.svg)]()
 [![Target: Source2 %2F Windows x64](https://img.shields.io/badge/Target-Source2%20%2F%20Windows%20x64-informational.svg)]()
