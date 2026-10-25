@@ -52,7 +52,7 @@ def verify_openid2_callback(query_params: dict[str, str], expected_return_to: st
     if not hmac.compare_digest(claimed_id, identity):
         raise ValueError("Mismatch between openid.claimed_id and openid.identity")
 
-    # 3. Verify return_to matches our exact callback URL
+    # 3. Verify return_to matches the expected callback URL
     if query_params.get("openid.return_to") != expected_return_to:
         raise ValueError("Invalid openid.return_to destination")
 
