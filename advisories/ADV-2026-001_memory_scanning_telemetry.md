@@ -1,9 +1,9 @@
-# Security Research Advisory: ADV-2026-001
+﻿# Security Research Advisory: ADV-2026-001
 
 - **Advisory ID:** ADV-2026-001
 - **Title:** Architecture of Client-Side Memory Page Validation & Heuristic Telemetry Reporting
 - **Published:** October 2026
-- **Researcher:** Sergey Shunko
+- **Researcher:** Serhii Shunko
 - **Classification:** Defensive Security Research / Client-Side Integrity Architecture
 - **Target Architecture:** Windows x64 / Source 2 Client Module
 

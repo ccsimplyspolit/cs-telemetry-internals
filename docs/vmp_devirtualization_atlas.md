@@ -1,6 +1,6 @@
-# VMProtect 3.6–3.10.5 Devirtualization Atlas & Handler Dispatch Analysis
+﻿# VMProtect 3.6–3.10.5 Devirtualization Atlas & Handler Dispatch Analysis
 
-**Author:** Sergey Shunko  
+**Author:** Serhii Shunko  
 **Classification:** Advanced Binary Analysis & Code Deobfuscation  
 **Target:** x64 PE Protected Binaries / VMProtect 3.6+ Architecture  
 

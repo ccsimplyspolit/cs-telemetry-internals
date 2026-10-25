@@ -1,6 +1,6 @@
-# Windows PE In-Memory Injection Vectors & Endpoint Detection Telemetry
+﻿# Windows PE In-Memory Injection Vectors & Endpoint Detection Telemetry
 
-**Author:** Sergey Shunko  
+**Author:** Serhii Shunko  
 **Classification:** Systems Security & Endpoint Telemetry Analysis  
 **Scope:** Windows x64 PE Loading Mechanics & Kernel Monitor Observability  
 

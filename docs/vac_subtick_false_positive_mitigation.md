@@ -1,6 +1,6 @@
-# False-Positive Mitigation in Subtick Telemetry: Differentiating Network Jitter, High-Polling Inputs, and Heuristic Exploitation in Source 2
+﻿# False-Positive Mitigation in Subtick Telemetry: Differentiating Network Jitter, High-Polling Inputs, and Heuristic Exploitation in Source 2
 
-**Author:** Sergey Shunko  
+**Author:** Serhii Shunko  
 **Classification:** Anti-Cheat Engineering, Telemetry Auditing & False-Positive Mitigation  
 **Target:** Valve Source 2 Engine / VAC Live Telemetry Pipeline  
 

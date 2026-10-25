@@ -1,6 +1,6 @@
-# Subtick Input Validation & Protobuf Telemetry in Source 2
+﻿# Subtick Input Validation & Protobuf Telemetry in Source 2
 
-**Author:** Sergey Shunko  
+**Author:** Serhii Shunko  
 **Classification:** Network Protocol Analysis & Telemetry Auditing  
 **Engine:** Valve Source 2 (CS2 Engine Subtick Architecture)  
 
