@@ -7,13 +7,14 @@ authors:
     given-names: Serhii
     orcid: "https://orcid.org/0009-0002-4183-0361"
     email: cc.simply.spolit@gmail.com
+doi: 10.5281/zenodo.23640494
 identifiers:
   - type: doi
     value: 10.5281/zenodo.23640494
 repository-code: "https://github.com/ccsimplyspolit/cs-telemetry-internals"
 url: "https://ccsimplyspolit.github.io/"
 license: MIT
-version: 1.0.0
+version: 1.0.1
 date-released: "2026-10-25"
 keywords:
   - binary-analysis

@@ -1,6 +1,6 @@
 # Audit Preparation & Architecture Package (`AUDIT_PREP.md`)
 
-- **Project:** `cs-telemetry-internals` (`v1.0.2`)
+- **Project:** `cs-telemetry-internals` (`v1.0.1`)
 - **Lead Researcher:** Serhii Shunko (`@sshunko` / `@ccsimplyspolit`, ORCID [`0009-0002-4183-0361`](https://orcid.org/0009-0002-4183-0361))
 - **Methodology:** Trail of Bits Audit Preparation Checklist (Static & Dynamic Verification Suite)
 
