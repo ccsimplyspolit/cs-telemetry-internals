@@ -2,7 +2,7 @@
 
 - **Project:** `cs-telemetry-internals` (`v1.0.2`)
 - **Lead Researcher:** Serhii Shunko (`@sshunko` / `@ccsimplyspolit`, ORCID [`0009-0002-4183-0361`](https://orcid.org/0009-0002-4183-0361))
-- **Methodology:** Trail of Bits Audit Preparation Checklist (`audit-prep-assistant`)
+- **Methodology:** Trail of Bits Audit Preparation Checklist (Static & Dynamic Verification Suite)
 
 ---
 
