@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "Source 2 Network Protocol Auditing, Server Input Validation & Endpoint Telemetry Research"
+message: "If you reference these whitepapers or static analysis tools in your research, please cite them using the metadata below."
+type: software
+authors:
+  - family-names: Shunko
+    given-names: Serhii
+    orcid: "https://orcid.org/0009-0002-4183-0361"
+    email: cc.simply.spolit@gmail.com
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23640494
+repository-code: "https://github.com/ccsimplyspolit/cs-telemetry-internals"
+url: "https://ccsimplyspolit.github.io/"
+license: MIT
+version: 1.0.0
+date-released: "2026-10-25"
+keywords:
+  - binary-analysis
+  - protocol-buffers
+  - input-validation
+  - pe32-plus
+  - static-analysis
+  - idapython

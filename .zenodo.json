@@ -1,0 +1,28 @@
+{
+  "title": "Source 2 Network Protocol Auditing, Server Input Validation & Endpoint Telemetry Research",
+  "upload_type": "software",
+  "description": "Six technical whitepapers and dual-mode IDAPython/CLI static analyzer covering server-side Protocol Buffers wire input validation, IEEE-754 NaN/Inf sanitization, and relocation-masked PE32+ .text section integrity verification.",
+  "creators": [
+    {
+      "name": "Shunko, Serhii",
+      "orcid": "0009-0002-4183-0361"
+    }
+  ],
+  "license": "MIT",
+  "version": "1.0.0",
+  "keywords": [
+    "Binary Security",
+    "Protocol Buffers",
+    "Static Analysis",
+    "PE32+",
+    "IDAPython",
+    "Input Validation"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/ccsimplyspolit/cs-telemetry-internals",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
