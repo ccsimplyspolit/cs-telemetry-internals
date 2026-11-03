@@ -8,7 +8,7 @@
 
 ## 1. Abstract
 
-Understanding how unauthorized code enters a process address space is critical for designing robust endpoint telemetry systems. This paper presents a comparative analysis of 11 distinct binary injection and mapping techniques across Windows x64, detailing their kernel-mode observability, Virtual Address Descriptor (VAD) footprint, and detection signatures.
+Understanding how unauthorized code enters a process address space is critical for designing resilient endpoint telemetry systems. This paper presents a comparative analysis of 11 distinct binary injection and mapping techniques across Windows x64, detailing their kernel-mode observability, Virtual Address Descriptor (VAD) footprint, and detection signatures.
 
 ---
 
@@ -32,7 +32,7 @@ Understanding how unauthorized code enters a process address space is critical f
 
 ## 3. Kernel-Level Telemetry Mechanisms
 
-Endpoint detection engines leverage native Windows kernel callbacks to detect injection attempts in real time:
+Endpoint detection engines use native Windows kernel callbacks to detect injection attempts in real time:
 
 ### 3.1 Object Access Filtering (`ObRegisterCallbacks`)
 By filtering `Process` and `Thread` object handle creation:
