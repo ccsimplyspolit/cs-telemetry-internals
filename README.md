@@ -1,5 +1,7 @@
 # Source 2 Network Protocol Auditing, Server Input Validation & Endpoint Telemetry Research
 
+<p align="center"><img src="assets/hero-banner.svg" width="100%" alt="cs-telemetry-internals Banner" /></p>
+
 [![CI](https://github.com/ccsimplyspolit/cs-telemetry-internals/actions/workflows/ci.yml/badge.svg)](https://github.com/ccsimplyspolit/cs-telemetry-internals/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23640494.svg)](https://doi.org/10.5281/zenodo.23640494)
